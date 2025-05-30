@@ -2,5 +2,5 @@
 *
 
 # 明示的にGitに含める
-!/Assets/
+!/Assets/**
 !.gitignore
