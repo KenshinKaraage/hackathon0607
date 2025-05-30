@@ -1,0 +1,6 @@
+# すべてを無視
+*
+
+# 明示的にGitに含める
+!/Assets/
+!.gitignore
