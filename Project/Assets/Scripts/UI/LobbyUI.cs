@@ -1,22 +1,27 @@
+using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LobbyUI : MonoBehaviour
 {
-    public TMPro.TextMeshProUGUI roomCodeText;
+
+    void Start()
+    {
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.ConnectUsingSettings(); //サーバー接続
+        }
+    }
 
     public void OnClickCreateRoom()
     {
-        RoomManager.Instance.CreateRoom();
-        roomCodeText.text = RoomManager.Instance.RoomID;
+        RoomManager.Instance.CreateRoom("MyRoom123"); // 任意の部屋名
     }
 
-    public void OnClickJoinRoom(string inputCode)
+    public void OnClickJoinRoom()
     {
-        bool joined = RoomManager.Instance.JoinRoom(inputCode);
-        if (joined)
-            Debug.Log("Joined room: " + inputCode);
-        else
-            Debug.LogWarning("Join failed.");
+        RoomManager.Instance.JoinRoom("MyRoom123");
     }
 }
