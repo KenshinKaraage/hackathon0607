@@ -10,7 +10,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public static RoomManager Instance; //RoomManager.Instanceでどこからでもアクセス可能になる
 
 
-
     public string RoomName { get; private set; } //部屋ID
     public bool IsHost { get; private set; }  //ホストかどうか
 
@@ -30,29 +29,48 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
 
     // 部屋を作成（ホスト側）
-    public void CreateRoom(string roomName)
+    public void CreateRoom(string roomName, string password)
     {
-        var options = new RoomOptions
-        {
-            MaxPlayers = 2,             // 最大人数
-            IsVisible = true,           // ロビーで見えるか
-            IsOpen = true,              // 新しい参加者を受け入れるか
-            CleanupCacheOnLeave = true // プレイヤーが抜けたときにデータを消すか
-        };
+        var roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 4;
 
-        RoomName = roomName;
-        IsHost = true;
+        // カスタムプロパティにパスワードを追加
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
+        customProperties["password"] = password;
+        roomOptions.CustomRoomProperties = customProperties;
 
-        PhotonNetwork.CreateRoom(roomName, options, TypedLobby.Default);
+        // 外部からも見えるようにする（ロビー表示のため）
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "password" };
+
+        PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
 
     // 部屋に参加（ゲスト側）
-    public void JoinRoom(string roomName)
+    public void JoinRoom(string roomName, string enteredPassword)
     {
-        RoomName = roomName;
-        IsHost = false;
+        // 部屋一覧を取得して照合
+        foreach (RoomInfo room in RoomListManager.Instance.GetRoomList())
+        {
+            if (room.Name == roomName)
+            {
+                if (room.CustomProperties.TryGetValue("password", out object pwObj))
+                {
+                    string realPassword = pwObj as string;
+                    if (realPassword == enteredPassword)
+                    {
+                        PhotonNetwork.JoinRoom(roomName);
+                        return;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("パスワードが違います！");
+                        return;
+                    }
+                }
+            }
+        }
 
-        PhotonNetwork.JoinRoom(roomName);
+        Debug.LogWarning("指定された部屋が見つかりませんでした");
     }
 
 
@@ -76,7 +94,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room: " + PhotonNetwork.CurrentRoom.Name);
-        SceneManager.LoadScene("RoomScene");
+        //SceneManager.LoadScene("RoomScene");
     }
 
     // エラー処理（任意）
