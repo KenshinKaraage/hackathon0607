@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    //スタート画面からロビーに遷移するときに使用
+    //繧ｹ繧ｿ繝ｼ繝育判髱｢縺九ｉ繝ｭ繝薙�ｼ縺ｫ驕ｷ遘ｻ縺吶ｋ縺ｨ縺阪↓菴ｿ逕ｨ
     public void GoToLobby()
     {
         SceneManager.LoadScene("LobbyScene");

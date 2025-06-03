@@ -4,14 +4,14 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq; // •¶š—ñ‘€ì‚É•Ö—˜
+using System.Linq; // æ–‡å­—åˆ—æ“ä½œã«ä¾¿åˆ©
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public static RoomManager Instance; //RoomManager.Instance‚Å‚Ç‚±‚©‚ç‚Å‚àƒAƒNƒZƒX‰Â”\‚É‚È‚é
-    private string tempEnteredPassword; // ˆê“I‚É•Û‘¶‚µ‚Ä‚¨‚­
+    public static RoomManager Instance; //RoomManager.Instanceã§ã©ã“ã‹ã‚‰ã§ã‚‚ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½ã«ãªã‚‹
+    private string tempEnteredPassword; // ä¸€æ™‚çš„ã«ä¿å­˜ã—ã¦ãŠã
 
-    //Instance‚Ì‰Šú‰»
+    //Instanceã®åˆæœŸåŒ–
     private void Awake()
     {
         if (Instance == null)
@@ -20,33 +20,33 @@ public class RoomManager : MonoBehaviourPunCallbacks
             DontDestroyOnLoad(gameObject);
         }
         else
-        {//d•¡¶¬‚ğ–h‚®‚½‚ß‚É”jŠü‚·‚é
+        {//é‡è¤‡ç”Ÿæˆã‚’é˜²ããŸã‚ã«ç ´æ£„ã™ã‚‹
             Destroy(gameObject);
         }
     }
 
 
 
-    // •”‰®‚ğì¬iƒzƒXƒg‘¤j
+    // éƒ¨å±‹ã‚’ä½œæˆï¼ˆãƒ›ã‚¹ãƒˆå´ï¼‰
     public void CreateRoom(string roomName, string password)
     {
         var roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 4;
         roomOptions.IsVisible = true;
-        Debug.Log("•”‰®–¼:"+roomName);
+        Debug.Log("éƒ¨å±‹å:" + roomName);
 
-        // ƒJƒXƒ^ƒ€ƒvƒƒpƒeƒB‚ÉƒpƒXƒ[ƒh‚ğ’Ç‰Á
+        // ã‚«ã‚¹ã‚¿ãƒ ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã«ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’è¿½åŠ 
         ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
         customProperties["password"] = password;
         roomOptions.CustomRoomProperties = customProperties;
 
-        // ŠO•”‚©‚ç‚àŒ©‚¦‚é‚æ‚¤‚É‚·‚éiƒƒr[•\¦‚Ì‚½‚ßj
+        // å¤–éƒ¨ã‹ã‚‰ã‚‚è¦‹ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹ï¼ˆãƒ­ãƒ“ãƒ¼è¡¨ç¤ºã®ãŸã‚ï¼‰
         roomOptions.CustomRoomPropertiesForLobby = new string[] { "password" };
 
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
 
-    // ƒpƒXƒ[ƒh‚ğÆ‡‚µ‚Ä•”‰®‚ÉQ‰ÁiƒQƒXƒg‘¤j
+    // ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ç…§åˆã—ã¦éƒ¨å±‹ã«å‚åŠ ï¼ˆã‚²ã‚¹ãƒˆå´ï¼‰
     public void JoinRoom(string roomName, string enteredPassword)
     {
         tempEnteredPassword = enteredPassword;
@@ -55,38 +55,38 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("ƒ}ƒXƒ^[ƒT[ƒo[‚ÉÚ‘±‚³‚ê‚Ü‚µ‚½");
-        PhotonNetwork.JoinLobby(); // ƒƒr[‚É“ü‚é
+        Debug.Log("ãƒã‚¹ã‚¿ãƒ¼ã‚µãƒ¼ãƒãƒ¼ã«æ¥ç¶šã•ã‚Œã¾ã—ãŸ");
+        PhotonNetwork.JoinLobby(); // ãƒ­ãƒ“ãƒ¼ã«å…¥ã‚‹
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         if (roomList.Count == 0)
         {
-            Debug.Log("Œ»İA—˜—p‰Â”\‚È•”‰®‚Í‚ ‚è‚Ü‚¹‚ñB");
+            Debug.Log("ç¾åœ¨ã€åˆ©ç”¨å¯èƒ½ãªéƒ¨å±‹ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚");
             return;
         }
 
-        Debug.Log($"Œ»İ‚Ì•”‰®”: {roomList.Count}");
+        Debug.Log($"ç¾åœ¨ã®éƒ¨å±‹æ•°: {roomList.Count}");
 
         foreach (RoomInfo room in roomList)
         {
-            // ÀÛ‚É‚Í‚±‚±‚Å cachedRoomList ‚ğXV‚·‚é
+            // å®Ÿéš›ã«ã¯ã“ã“ã§ cachedRoomList ã‚’æ›´æ–°ã™ã‚‹
             if (room.RemovedFromList)
             {
-                Debug.Log($"ƒ‹[ƒ€ '{room.Name}' ‚ªíœ‚³‚ê‚Ü‚µ‚½B");
+                Debug.Log($"ãƒ«ãƒ¼ãƒ  '{room.Name}' ãŒå‰Šé™¤ã•ã‚Œã¾ã—ãŸã€‚");
             }
             else
             {
-                string roomInfo = $"•”‰®–¼: {room.Name}, " +
-                                  $"Q‰Ál”: {room.PlayerCount}/{room.MaxPlayers}";
+                string roomInfo = $"éƒ¨å±‹å: {room.Name}, " +
+                                  $"å‚åŠ äººæ•°: {room.PlayerCount}/{room.MaxPlayers}";
 
                 if (room.CustomProperties.TryGetValue("password", out object passwordObj))
                 {
-                    // ƒƒr[‚Å‚ÍÀÛ‚ÌƒpƒXƒ[ƒh‚ğ•\¦‚·‚é‘ã‚í‚è‚ÉAƒpƒXƒ[ƒh‚Ì—L–³‚ğ¦‚·•û‚ªˆê”Ê“I‚Å‚·B
-                    // roomInfo += $", ƒpƒXƒ[ƒhİ’è: {(string.IsNullOrEmpty((string)passwordObj) ? "‚È‚µ" : "‚ ‚è")}";
-                    // ƒfƒoƒbƒO—p‚ÉÀÛ‚ÌƒpƒXƒ[ƒh‚ğ•\¦‚·‚éê‡‚Í‚±‚Ì‚Ü‚Ü‚Å‚àOK
-                    roomInfo += $", ƒpƒXƒ[ƒh: {(string)passwordObj}";
+                    // ãƒ­ãƒ“ãƒ¼ã§ã¯å®Ÿéš›ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’è¡¨ç¤ºã™ã‚‹ä»£ã‚ã‚Šã«ã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®æœ‰ç„¡ã‚’ç¤ºã™æ–¹ãŒä¸€èˆ¬çš„ã§ã™ã€‚
+                    // roomInfo += $", ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰è¨­å®š: {(string.IsNullOrEmpty((string)passwordObj) ? "ãªã—" : "ã‚ã‚Š")}";
+                    // ãƒ‡ãƒãƒƒã‚°ç”¨ã«å®Ÿéš›ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’è¡¨ç¤ºã™ã‚‹å ´åˆã¯ã“ã®ã¾ã¾ã§ã‚‚OK
+                    roomInfo += $", ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰: {(string)passwordObj}";
                 }
                 Debug.Log(roomInfo);
             }
@@ -94,77 +94,77 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
 
 
-    // ì¬¬Œ÷
+    // ä½œæˆæˆåŠŸæ™‚
     public override void OnCreatedRoom()
     {
         Debug.Log("Room created: " + PhotonNetwork.CurrentRoom.Name);
-        // IsHost = true; // •K—v‚Å‚ ‚ê‚Î‚±‚±‚ÅƒzƒXƒgƒtƒ‰ƒO‚ğİ’è
-        // RoomName = PhotonNetwork.CurrentRoom.Name; // •K—v‚Å‚ ‚ê‚Î•”‰®–¼‚ğİ’è
-        Debug.Log("ƒzƒXƒg‚Æ‚µ‚Äƒ‹[ƒ€‚ğì¬‚µ‚Ü‚µ‚½BRoomScene‚É‘JˆÚ‚µ‚Ü‚·B");
-        PhotonNetwork.LoadLevel("RoomScene"); // PhotonNetwork.LoadLevel ‚ğ„§
+        // IsHost = true; // å¿…è¦ã§ã‚ã‚Œã°ã“ã“ã§ãƒ›ã‚¹ãƒˆãƒ•ãƒ©ã‚°ã‚’è¨­å®š
+        // RoomName = PhotonNetwork.CurrentRoom.Name; // å¿…è¦ã§ã‚ã‚Œã°éƒ¨å±‹åã‚’è¨­å®š
+        Debug.Log("ãƒ›ã‚¹ãƒˆã¨ã—ã¦ãƒ«ãƒ¼ãƒ ã‚’ä½œæˆã—ã¾ã—ãŸã€‚RoomSceneã«é·ç§»ã—ã¾ã™ã€‚");
+        PhotonNetwork.LoadLevel("RoomScene"); // PhotonNetwork.LoadLevel ã‚’æ¨å¥¨
     }
 
-    // “üº¬Œ÷i‹¤’Êj
+    // å…¥å®¤æˆåŠŸæ™‚ï¼ˆå…±é€šï¼‰
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined room: " + PhotonNetwork.CurrentRoom.Name);
-        // RoomName = PhotonNetwork.CurrentRoom.Name; // •K—v‚Å‚ ‚ê‚Î•”‰®–¼‚ğİ’è
+        // RoomName = PhotonNetwork.CurrentRoom.Name; // å¿…è¦ã§ã‚ã‚Œã°éƒ¨å±‹åã‚’è¨­å®š
 
-        // ƒ}ƒXƒ^[ƒNƒ‰ƒCƒAƒ“ƒgiƒzƒXƒgj‚Å‚È‚¢ê‡‚Ì‚İƒpƒXƒ[ƒhÆ‡‚ğs‚¤
+        // ãƒã‚¹ã‚¿ãƒ¼ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆï¼ˆãƒ›ã‚¹ãƒˆï¼‰ã§ãªã„å ´åˆã®ã¿ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ç…§åˆã‚’è¡Œã†
         if (!PhotonNetwork.IsMasterClient)
         {
-            // IsHost = false; // •K—v‚Å‚ ‚ê‚Î‚±‚±‚ÅƒQƒXƒgƒtƒ‰ƒO‚ğİ’è
-            Debug.Log("ƒQƒXƒg‚Æ‚µ‚Äƒ‹[ƒ€‚ÉQ‰Á‚µ‚Ü‚µ‚½BƒpƒXƒ[ƒh‚ğŠm”F‚µ‚Ü‚·B");
+            // IsHost = false; // å¿…è¦ã§ã‚ã‚Œã°ã“ã“ã§ã‚²ã‚¹ãƒˆãƒ•ãƒ©ã‚°ã‚’è¨­å®š
+            Debug.Log("ã‚²ã‚¹ãƒˆã¨ã—ã¦ãƒ«ãƒ¼ãƒ ã«å‚åŠ ã—ã¾ã—ãŸã€‚ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ç¢ºèªã—ã¾ã™ã€‚");
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("password", out object roomPasswordObj))
             {
                 string actualRoomPassword = roomPasswordObj as string;
 
-                // ‹ó‚ÌƒpƒXƒ[ƒh "" ‚Æ null ‚ğ“¯ˆê‹‚·‚éê‡‚âA‚æ‚èŒµ–§‚È”äŠr‚ª•K—v‚Èê‡‚Í’²®‚µ‚Ä‚­‚¾‚³‚¢B
-                if (!string.IsNullOrEmpty(actualRoomPassword)) // ƒpƒXƒ[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚é•”‰®‚Ìê‡
+                // ç©ºã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ "" ã¨ null ã‚’åŒä¸€è¦–ã™ã‚‹å ´åˆã‚„ã€ã‚ˆã‚Šå³å¯†ãªæ¯”è¼ƒãŒå¿…è¦ãªå ´åˆã¯èª¿æ•´ã—ã¦ãã ã•ã„ã€‚
+                if (!string.IsNullOrEmpty(actualRoomPassword)) // ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹éƒ¨å±‹ã®å ´åˆ
                 {
                     if (actualRoomPassword == tempEnteredPassword)
                     {
-                        Debug.Log("ƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ü‚µ‚½BRoomScene‚É‘JˆÚ‚µ‚Ü‚·B");
-                        PhotonNetwork.LoadLevel("RoomScene"); // PhotonNetwork.LoadLevel ‚ğ„§
+                        Debug.Log("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã—ãŸã€‚RoomSceneã«é·ç§»ã—ã¾ã™ã€‚");
+                        PhotonNetwork.LoadLevel("RoomScene"); // PhotonNetwork.LoadLevel ã‚’æ¨å¥¨
                     }
                     else
                     {
-                        Debug.LogWarning($"ƒpƒXƒ[ƒh‚ªˆê’v‚µ‚Ü‚¹‚ñB“ü—Í‚³‚ê‚½ƒpƒXƒ[ƒh: '{tempEnteredPassword}', ÀÛ‚ÌƒpƒXƒ[ƒh: '{actualRoomPassword}'B‘Şº‚µ‚Ü‚·B");
+                        Debug.LogWarning($"ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“ã€‚å…¥åŠ›ã•ã‚ŒãŸãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰: '{tempEnteredPassword}', å®Ÿéš›ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰: '{actualRoomPassword}'ã€‚é€€å®¤ã—ã¾ã™ã€‚");
                         PhotonNetwork.LeaveRoom();
-                        // •K—v‚Å‚ ‚ê‚ÎUI‚ÅƒGƒ‰[ƒƒbƒZ[ƒW‚ğ•\¦
-                        // UIManager.Instance.ShowMessage("ƒpƒXƒ[ƒh‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B");
+                        // å¿…è¦ã§ã‚ã‚Œã°UIã§ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤º
+                        // UIManager.Instance.ShowMessage("ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚");
                     }
                 }
-                else // ƒpƒXƒ[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚È‚¢•”‰®‚Ìê‡iŠî–{“I‚É‚Í‚ ‚è‚¦‚È‚¢‚ª”O‚Ì‚½‚ßj
+                else // ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚Œã¦ã„ãªã„éƒ¨å±‹ã®å ´åˆï¼ˆåŸºæœ¬çš„ã«ã¯ã‚ã‚Šãˆãªã„ãŒå¿µã®ãŸã‚ï¼‰
                 {
-                    Debug.Log("‚±‚Ì•”‰®‚É‚ÍƒpƒXƒ[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ‚ªAƒpƒXƒ[ƒh‚È‚µ‚ÅQ‰Áˆ—‚ğŒp‘±‚µ‚Ü‚·BRoomScene‚É‘JˆÚ‚µ‚Ü‚·B");
+                    Debug.Log("ã“ã®éƒ¨å±‹ã«ã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ãŒã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãªã—ã§å‚åŠ å‡¦ç†ã‚’ç¶™ç¶šã—ã¾ã™ã€‚RoomSceneã«é·ç§»ã—ã¾ã™ã€‚");
                     PhotonNetwork.LoadLevel("RoomScene");
                 }
             }
-            else // ƒ‹[ƒ€‚É "password" ƒvƒƒpƒeƒB‚ª‘¶İ‚µ‚È‚¢ê‡ (ƒpƒXƒ[ƒh‚È‚µƒ‹[ƒ€)
+            else // ãƒ«ãƒ¼ãƒ ã« "password" ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒå­˜åœ¨ã—ãªã„å ´åˆ (ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãªã—ãƒ«ãƒ¼ãƒ )
             {
-                Debug.Log("‚±‚Ì•”‰®‚ÍƒpƒXƒ[ƒhƒvƒƒpƒeƒB‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñiƒpƒXƒ[ƒh‚È‚µjBRoomScene‚É‘JˆÚ‚µ‚Ü‚·B");
-                // ƒpƒXƒ[ƒh‚È‚µ‚Ì•”‰®‚Ö‚ÌQ‰Á‚ğ‹–‰Â‚·‚éê‡
+                Debug.Log("ã“ã®éƒ¨å±‹ã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ï¼ˆãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãªã—ï¼‰ã€‚RoomSceneã«é·ç§»ã—ã¾ã™ã€‚");
+                // ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãªã—ã®éƒ¨å±‹ã¸ã®å‚åŠ ã‚’è¨±å¯ã™ã‚‹å ´åˆ
                 PhotonNetwork.LoadLevel("RoomScene");
             }
         }
-        else // ƒ}ƒXƒ^[ƒNƒ‰ƒCƒAƒ“ƒgiƒzƒXƒgj‚Ìê‡
+        else // ãƒã‚¹ã‚¿ãƒ¼ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆï¼ˆãƒ›ã‚¹ãƒˆï¼‰ã®å ´åˆ
         {
-            Debug.Log("ƒzƒXƒg‚Æ‚µ‚Äƒ‹[ƒ€‚ÉQ‰Áˆ—‚ğŠ®—¹‚µ‚Ü‚µ‚½B");
-            // ƒzƒXƒg‚Í OnCreatedRoom ‚ÅŠù‚ÉƒV[ƒ“‘JˆÚ‚µ‚Ä‚¢‚é‚Ì‚ÅA‚±‚±‚Å‚Í‰½‚à‚µ‚È‚¢‚©A
-            // ‚à‚µ OnCreatedRoom ‚ÅƒV[ƒ“‘JˆÚ‚µ‚È‚¢İŒv‚É‚·‚éê‡‚Í‚±‚±‚Ås‚¤B
-            // Œ»İ‚ÌƒR[ƒh‚Å‚Í OnCreatedRoom ‚Å‘JˆÚ‚µ‚Ä‚¢‚é‚Ì‚ÅA‚±‚±‚Å‚Í’Ç‰Á‚Ì‘JˆÚ‚Í•s—vB
+            Debug.Log("ãƒ›ã‚¹ãƒˆã¨ã—ã¦ãƒ«ãƒ¼ãƒ ã«å‚åŠ å‡¦ç†ã‚’å®Œäº†ã—ã¾ã—ãŸã€‚");
+            // ãƒ›ã‚¹ãƒˆã¯ OnCreatedRoom ã§æ—¢ã«ã‚·ãƒ¼ãƒ³é·ç§»ã—ã¦ã„ã‚‹ã®ã§ã€ã“ã“ã§ã¯ä½•ã‚‚ã—ãªã„ã‹ã€
+            // ã‚‚ã— OnCreatedRoom ã§ã‚·ãƒ¼ãƒ³é·ç§»ã—ãªã„è¨­è¨ˆã«ã™ã‚‹å ´åˆã¯ã“ã“ã§è¡Œã†ã€‚
+            // ç¾åœ¨ã®ã‚³ãƒ¼ãƒ‰ã§ã¯ OnCreatedRoom ã§é·ç§»ã—ã¦ã„ã‚‹ã®ã§ã€ã“ã“ã§ã¯è¿½åŠ ã®é·ç§»ã¯ä¸è¦ã€‚
         }
-        tempEnteredPassword = null; // ˆêƒpƒXƒ[ƒh‚ğƒNƒŠƒA
+        tempEnteredPassword = null; // ä¸€æ™‚ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ã‚¯ãƒªã‚¢
     }
 
     public override void OnLeftRoom()
     {
-        Debug.Log("•”‰®‚ğ‘Şo‚µ‚Ü‚µ‚½");
+        Debug.Log("éƒ¨å±‹ã‚’é€€å‡ºã—ã¾ã—ãŸ");
     }
 
 
-    // ƒGƒ‰[ˆ—i”CˆÓj
+    // ã‚¨ãƒ©ãƒ¼å‡¦ç†ï¼ˆä»»æ„ï¼‰
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.LogError("Create failed: " + message);
@@ -172,24 +172,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        // ƒGƒ‰[ƒR[ƒh‚ÉŠî‚Ã‚¢‚½Ú×‚ÈƒtƒB[ƒhƒoƒbƒN
-        string errorMessage = $"ƒ‹[ƒ€‚Ö‚ÌQ‰Á‚É¸”s‚µ‚Ü‚µ‚½ ({returnCode}): {message}";
+        // ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã«åŸºã¥ã„ãŸè©³ç´°ãªãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯
+        string errorMessage = $"ãƒ«ãƒ¼ãƒ ã¸ã®å‚åŠ ã«å¤±æ•—ã—ã¾ã—ãŸ ({returnCode}): {message}";
         if (returnCode == ErrorCode.GameDoesNotExist)
         {
-            errorMessage = "w’è‚³‚ê‚½•”‰®‚Í‘¶İ‚µ‚Ü‚¹‚ñB";
+            errorMessage = "æŒ‡å®šã•ã‚ŒãŸéƒ¨å±‹ã¯å­˜åœ¨ã—ã¾ã›ã‚“ã€‚";
         }
         else if (returnCode == ErrorCode.GameFull)
         {
-            errorMessage = "•”‰®‚ª–ˆõ‚Å‚·B";
+            errorMessage = "éƒ¨å±‹ãŒæº€å“¡ã§ã™ã€‚";
         }
         else if (returnCode == ErrorCode.GameClosed)
         {
-            errorMessage = "•”‰®‚ÍŠù‚É•Â‚¶‚ç‚ê‚Ä‚¢‚Ü‚·B";
+            errorMessage = "éƒ¨å±‹ã¯æ—¢ã«é–‰ã˜ã‚‰ã‚Œã¦ã„ã¾ã™ã€‚";
         }
-        // ƒJƒXƒ^ƒ€”FØƒGƒ‰[‚È‚Ç‚àl—¶‚É“ü‚ê‚é‚Æ—Ç‚¢‚Å‚µ‚å‚¤ (PUN‚Å‚Í‚ ‚Ü‚èˆê”Ê“I‚Å‚Í‚È‚¢‚ª)
+        // ã‚«ã‚¹ã‚¿ãƒ èªè¨¼ã‚¨ãƒ©ãƒ¼ãªã©ã‚‚è€ƒæ…®ã«å…¥ã‚Œã‚‹ã¨è‰¯ã„ã§ã—ã‚‡ã† (PUNã§ã¯ã‚ã¾ã‚Šä¸€èˆ¬çš„ã§ã¯ãªã„ãŒ)
 
         Debug.LogWarning(errorMessage);
-        tempEnteredPassword = null; // ¸”s‚µ‚½‚Ì‚ÅˆêƒpƒXƒ[ƒh‚ğƒNƒŠƒA
+        tempEnteredPassword = null; // å¤±æ•—ã—ãŸã®ã§ä¸€æ™‚ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ã‚¯ãƒªã‚¢
         // UIManager.Instance.ShowMessage(errorMessage);
     }
 

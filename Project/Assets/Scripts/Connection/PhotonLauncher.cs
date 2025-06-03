@@ -22,13 +22,13 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     }
 
 
-    //•”‰®‚É“ü‚Á‚½
+    //éƒ¨å±‹ã«å…¥ã£ãŸæ™‚
     public override void OnJoinedRoom()
     {
 
-        Debug.Log("ƒ‹[ƒ€‚É“ü‚è‚Ü‚µ‚½F" + PhotonNetwork.CurrentRoom.Name);
+        Debug.Log("ãƒ«ãƒ¼ãƒ ã«å…¥ã‚Šã¾ã—ãŸï¼š" + PhotonNetwork.CurrentRoom.Name);
 
-        // ‘¼ƒvƒŒƒCƒ„[‚É‚à’Ê’miRPC‚ÅŠm”Fj
+        // ä»–ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã‚‚é€šçŸ¥ï¼ˆRPCã§ç¢ºèªï¼‰
         photonView.RPC("ShowJoinLog", RpcTarget.All, PhotonNetwork.NickName);
     }
 
@@ -36,16 +36,16 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
 
 
-    //‘¼ƒvƒŒƒCƒ„[‚ÌƒNƒ‰ƒCƒAƒ“ƒgã‚Å‚àŒÄ‚Ño‚¹‚é  RPC = Remote Procedure Call
+    //ä»–ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆä¸Šã§ã‚‚å‘¼ã³å‡ºã›ã‚‹  RPC = Remote Procedure Call
     [PunRPC]
     void ShowJoinLog(string nickname)
     {
-        Debug.Log($"{nickname} ‚ª“üº‚µ‚Ü‚µ‚½");
+        Debug.Log($"{nickname} ãŒå…¥å®¤ã—ã¾ã—ãŸ");
     }
 
     void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        //PhotonNetwork.NickName = "User" + Random.Range(1000, 9999);  //ƒ†[ƒU[–¼‚ÌŠ„‚è“–‚Ä
+        //PhotonNetwork.NickName = "User" + Random.Range(1000, 9999);  //ãƒ¦ãƒ¼ã‚¶ãƒ¼åã®å‰²ã‚Šå½“ã¦
     }
 }

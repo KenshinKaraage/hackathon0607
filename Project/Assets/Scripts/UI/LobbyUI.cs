@@ -17,7 +17,7 @@ public class LobbyUI : MonoBehaviour
     {
         if (!PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.ConnectUsingSettings(); //ƒT[ƒo[Ú‘±
+            PhotonNetwork.ConnectUsingSettings(); //ã‚µãƒ¼ãƒãƒ¼æ¥ç¶š
         }
     }
 
@@ -27,12 +27,12 @@ public class LobbyUI : MonoBehaviour
 
         if (!string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(PhotonNetwork.NickName))
         {
-            RoomManager.Instance.CreateRoom("MyRoom123", password); // ”CˆÓ‚Ì•”‰®–¼
+            RoomManager.Instance.CreateRoom("MyRoom123", password); // ä»»æ„ã®éƒ¨å±‹å
 
         }
         else
         {
-            Debug.LogWarning("ƒ†[ƒU[–¼‚ª–¢“ü—Í‚Å‚·B");
+            Debug.LogWarning("ãƒ¦ãƒ¼ã‚¶ãƒ¼åãŒæœªå…¥åŠ›ã§ã™ã€‚");
         }
 
     }
@@ -47,7 +47,7 @@ public class LobbyUI : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("ƒ†[ƒU[–¼‚Ü‚½‚ÍƒpƒXƒ[ƒh‚ª–¢“ü—Í‚Å‚·B");
+            Debug.LogWarning("ãƒ¦ãƒ¼ã‚¶ãƒ¼åã¾ãŸã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒæœªå…¥åŠ›ã§ã™ã€‚");
         }
     }
 

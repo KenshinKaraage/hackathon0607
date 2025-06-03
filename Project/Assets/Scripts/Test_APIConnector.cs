@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Networking;
 using Cysharp.Threading.Tasks;
-using static UnityEditor.Rendering.CameraUI;
 
 namespace Test
 {
