@@ -7,10 +7,16 @@ public class NicknameInput : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nicknameInput;
 
+
     private void Start()
     {
         // 入力が終了したときにニックネームを設定する
         nicknameInput.onEndEdit.AddListener(SetNickname);
+    }
+
+    public string getNickname()
+    {
+        return nicknameInput.text.Trim();
     }
 
     private void SetNickname(string input)

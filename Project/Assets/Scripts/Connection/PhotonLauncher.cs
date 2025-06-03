@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 
 public class PhotonLauncher : MonoBehaviourPunCallbacks
@@ -9,6 +10,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
     [SerializeField] private TMP_Text nicknameText;
 
+    private List<RoomInfo> cachedRoomList = new List<RoomInfo>();
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -19,13 +21,6 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         nicknameText.text = "Name: " + PhotonNetwork.NickName;
     }
 
-    //サーバー接続時
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("接続成功！");
-        //PhotonNetwork.JoinOrCreateRoom("TestRoom", new RoomOptions { MaxPlayers = 4 }, TypedLobby.Default);
-    }
-
 
     //部屋に入った時
     public override void OnJoinedRoom()
@@ -33,10 +28,10 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
 
         Debug.Log("ルームに入りました：" + PhotonNetwork.CurrentRoom.Name);
 
-
         // 他プレイヤーにも通知（RPCで確認）
         photonView.RPC("ShowJoinLog", RpcTarget.All, PhotonNetwork.NickName);
     }
+
 
 
 
