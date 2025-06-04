@@ -10,7 +10,7 @@ public class NicknameInput : MonoBehaviour
 
     private void Start()
     {
-        // “ü—Í‚ªI—¹‚µ‚½‚Æ‚«‚ÉƒjƒbƒNƒl[ƒ€‚ğİ’è‚·‚é
+        // å…¥åŠ›ãŒçµ‚äº†ã—ãŸã¨ãã«ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ ã‚’è¨­å®šã™ã‚‹
         nicknameInput.onEndEdit.AddListener(SetNickname);
     }
 
@@ -26,12 +26,12 @@ public class NicknameInput : MonoBehaviour
         if (!string.IsNullOrEmpty(inputName))
         {
             PhotonNetwork.NickName = inputName;
-            Debug.Log("ƒjƒbƒNƒl[ƒ€İ’èŠ®—¹: " + PhotonNetwork.NickName);
-            // Ÿ‚Ì‰æ–Ê‚Éi‚Ş‚È‚ç‚±‚±‚Å Scene ‘JˆÚ‚µ‚Ä‚à‚æ‚¢
+            Debug.Log("ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ è¨­å®šå®Œäº†: " + PhotonNetwork.NickName);
+            // æ¬¡ã®ç”»é¢ã«é€²ã‚€ãªã‚‰ã“ã“ã§ Scene é·ç§»ã—ã¦ã‚‚ã‚ˆã„
         }
         else
         {
-            Debug.LogWarning("ƒjƒbƒNƒl[ƒ€‚ª‹ó‚Å‚·I");
+            Debug.LogWarning("ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ ãŒç©ºã§ã™ï¼");
         }
     }
 }

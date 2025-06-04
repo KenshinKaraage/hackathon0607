@@ -7,11 +7,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“‚ÌƒZƒbƒg
+        // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã®ã‚»ãƒƒãƒˆ
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ƒV[ƒ“‚ğ‚Ü‚½‚¢‚Å‚à”jŠü‚³‚ê‚È‚¢
+            DontDestroyOnLoad(gameObject); // ã‚·ãƒ¼ãƒ³ã‚’ã¾ãŸã„ã§ã‚‚ç ´æ£„ã•ã‚Œãªã„
         }
         else
         {
@@ -19,7 +19,7 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    // ƒV[ƒ“‚ğƒ[ƒh‚·‚éiƒtƒF[ƒh•t‚«‚È‚Ç‚É‚àŠg’£‰Â”\j
+    // ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ï¼ˆãƒ•ã‚§ãƒ¼ãƒ‰ä»˜ããªã©ã«ã‚‚æ‹¡å¼µå¯èƒ½ï¼‰
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

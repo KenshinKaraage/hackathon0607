@@ -16,7 +16,7 @@ public class RoomListManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        PhotonNetwork.JoinLobby(); // ƒƒr[‚ÉQ‰Á‚µ‚Äƒ‹[ƒ€ƒŠƒXƒg‚ğæ“¾
+        PhotonNetwork.JoinLobby(); // ãƒ­ãƒ“ãƒ¼ã«å‚åŠ ã—ã¦ãƒ«ãƒ¼ãƒ ãƒªã‚¹ãƒˆã‚’å–å¾—
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -28,7 +28,7 @@ public class RoomListManager : MonoBehaviourPunCallbacks
                 cachedRoomList.Add(room);
         }
 
-        Debug.Log("æ“¾‚µ‚½ƒ‹[ƒ€”: " + cachedRoomList.Count);
+        Debug.Log("å–å¾—ã—ãŸãƒ«ãƒ¼ãƒ æ•°: " + cachedRoomList.Count);
     }
 
     public List<RoomInfo> GetRoomList()

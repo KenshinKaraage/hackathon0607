@@ -23,13 +23,13 @@ public class LogViewerScroll : MonoBehaviour
     {
         logCache += logString + "\n";
 
-        // 長すぎるログはカット
+        // 髟ｷ縺吶℃繧九Ο繧ｰ縺ｯ繧ｫ繝�繝�
         if (logCache.Length > 10000)
             logCache = logCache.Substring(logCache.Length - 8000);
 
         logText.text = logCache;
 
-        // 自動で一番下にスクロール
+        // 閾ｪ蜍輔〒荳逡ｪ荳九↓繧ｹ繧ｯ繝ｭ繝ｼ繝ｫ
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 0f;
     }
