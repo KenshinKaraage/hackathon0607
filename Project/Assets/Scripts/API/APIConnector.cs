@@ -35,6 +35,7 @@ public class APIConnector : MonoBehaviour
 {
     [SerializeField] private string deployId;
 
+    //json形式の答えをapiからGETします。
     public async UniTask<string> SendRequest(string prompt, string question)
     {
 #if GEMINI
