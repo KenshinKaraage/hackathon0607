@@ -5,16 +5,6 @@ using ExitGames.Client.Photon;
 using System;
 using System.Collections.Generic;
 
-public enum GameState
-{
-    JOB_DISTRIBUTION,
-    QUESTION,
-    ANSWER,
-    VOTE,
-    RESULT,
-}
-
-
 public class GameFlowController : MonoBehaviourPunCallbacks
 {
     private JobDistribution distribution;
@@ -58,6 +48,7 @@ public class GameFlowController : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
     }
 
+    //クライアント全員がカスタムプロパティを観測し、状態が変わったら該当GameStateに移動
     public override void OnRoomPropertiesUpdate(Hashtable changedProps)
     {
         if (changedProps.TryGetValue("GameState", out object stateValue))
