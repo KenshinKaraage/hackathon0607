@@ -16,4 +16,6 @@ public class UIPresenter : MonoBehaviour
         voteOb.SetActive(false);
         resultOb.SetActive(false);
     }
+
+
 }

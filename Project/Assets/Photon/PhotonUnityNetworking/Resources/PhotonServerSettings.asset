@@ -40,6 +40,10 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ShowJoinLog
+  - ProceedToResultPhaseRPC
+  - ReceiveVoteRPC
+  - SyncNPCListRPC
+  - UpdateNpcAliveStatusRPC
   - OnAllAPIAnswered
   - ResetAllAPIAnswered
   - OnPlayerAnswered

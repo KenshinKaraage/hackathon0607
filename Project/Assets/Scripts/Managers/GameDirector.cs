@@ -9,13 +9,10 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
             controller = FindAnyObjectByType<GameFlowController>();
 
             UIPresenter presenter = FindAnyObjectByType<UIPresenter>();
             presenter.ResetView();
             controller.Initialize();
-        }
     }
 }
