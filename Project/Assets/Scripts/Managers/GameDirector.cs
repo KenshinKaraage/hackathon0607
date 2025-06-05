@@ -12,24 +12,10 @@ public class GameDirector : MonoBehaviour
         if (PhotonNetwork.IsMasterClient)
         {
             controller = FindAnyObjectByType<GameFlowController>();
-            StartCoroutine(Direct());
+
+            UIPresenter presenter = FindAnyObjectByType<UIPresenter>();
+            presenter.ResetView();
+            controller.Initialize();
         }
-    }
-
-    private IEnumerator Direct()
-    {
-        UIPresenter presenter = FindAnyObjectByType<UIPresenter>();
-        presenter.ResetView();
-        controller.Initialize();
-
-        //仮の処理
-        yield return new WaitForSeconds(2.0f);
-        controller.SetRoomState(GameState.QUESTION);
-        yield return new WaitForSeconds(2.0f);
-        controller.SetRoomState(GameState.ANSWER);
-        yield return new WaitForSeconds(2.0f);
-        controller.SetRoomState(GameState.VOTE);
-        yield return new WaitForSeconds(2.0f);
-        controller.SetRoomState(GameState.RESULT);
     }
 }

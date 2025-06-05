@@ -40,6 +40,14 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ShowJoinLog
+  - OnAllAPIAnswered
+  - ResetAllAPIAnswered
+  - OnPlayerAnswered
+  - ResetPlayerAnswered
+  - OnRolesAssigned
+  - AssignRoleToAI
+  - ChangeAIAnswer
+  - ResetAIAnswerRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
