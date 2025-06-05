@@ -40,6 +40,10 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ShowJoinLog
+  - ProceedToResultPhaseRPC
+  - ReceiveVoteRPC
+  - SyncNPCListRPC
+  - UpdateNpcAliveStatusRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
