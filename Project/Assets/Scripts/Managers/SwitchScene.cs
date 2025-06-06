@@ -6,7 +6,7 @@ public class SceneController : MonoBehaviour
     //スタート画面からロビーに遷移するときに使用
     public void GoToLobby()
     {
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("LobbyScene2");
     }
 
     public void GoToRoom()
