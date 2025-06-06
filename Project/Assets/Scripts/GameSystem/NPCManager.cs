@@ -39,7 +39,7 @@ public class NPCManager : MonoBehaviourPunCallbacks
 
     private void CreateAndAddNPC(string name, JobNames job)
     {
-        NonPlayerCharacter newNpc = new NonPlayerCharacter(nextNpcId++, name, job);
+        NonPlayerCharacter newNpc = new NonPlayerCharacter(nextNpcId++, name);
         NpcList.Add(newNpc);
         Debug.Log(newNpc +"was created");
     }

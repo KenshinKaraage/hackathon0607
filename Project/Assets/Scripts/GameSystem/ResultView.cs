@@ -1,3 +1,5 @@
+using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 public class ResultView : GameStateBehaviour

@@ -163,6 +163,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("部屋を退出しました");
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+    }
 
     // エラー処理（任意）
     public override void OnCreateRoomFailed(short returnCode, string message)

@@ -1,23 +1,26 @@
 [System.Serializable]
 public class NonPlayerCharacter : IPlayerCharacter
 {
-    private int _ID;
-    private string _displayname;
-    private JobNames _job;
-    private bool _isAlive;
-
+    private int _uniqueID;
+    private string _nickname;
+    private Role _job;
     //コンストラクタ
-    public NonPlayerCharacter(int id, string name, JobNames jobTitle, bool isAlive = true)
+    public NonPlayerCharacter(int id, string name)
     {
-        this._ID = id;
-        this._displayname = name;
-        this._job = jobTitle;
-        this._isAlive = isAlive;
+        this._uniqueID = id;
+        this._nickname = name;
     }
 
-    public int ID { get => _ID; }
-    public string Displayname { get => _displayname; }
-    public JobNames Job { get => _job; set => _job = value; }
-    public bool IsAlive { get => _isAlive; set => _isAlive = value; }
+    public int UniqueID { get => _uniqueID; }
+    public string Nickname { get => _nickname; }
+    public Role Job { get; set; }         // 役職
+    public bool IsAlive { get; set; }
+
     public bool IsNPC => true;
+    public string Answer { get; set; }
+    public bool IsAnswered { get; set; }
+
+    public int ID => UniqueID;
+
+    public string Displayname => _nickname;
 }
