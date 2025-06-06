@@ -1020,8 +1020,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 323095303}
   m_HandleRect: {fileID: 323095302}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.8942792
+  m_Value: -0.0000019244758
+  m_Size: 0.8942629
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1074,7 +1074,6 @@ GameObject:
   m_Component:
   - component: {fileID: 643122423}
   - component: {fileID: 643122424}
-  - component: {fileID: 643122425}
   m_Layer: 5
   m_Name: UIPresenter
   m_TagString: Untagged
@@ -1123,22 +1122,6 @@ MonoBehaviour:
   answerOb: {fileID: 837836833}
   voteOb: {fileID: 1267109262}
   resultOb: {fileID: 325223276}
---- !u!114 &643122425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643122422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f766429a0594ca94d819b49b725da287, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainVotePanel: {fileID: 1267109262}
-  voteButtonContainer: {fileID: 806311305}
-  voteButtonPrefab: {fileID: 6871757184323793540, guid: e083096d244b5ae4e8e34f514806d823, type: 3}
-  instructionText: {fileID: 1434846671}
 --- !u!1 &698606940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,7 +1264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 31.715193}
+  m_AnchoredPosition: {x: 0, y: 31.715277}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &806311306
@@ -1992,6 +1975,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1267109263}
+  - component: {fileID: 1267109264}
+  - component: {fileID: 1267109265}
   m_Layer: 5
   m_Name: Vote
   m_TagString: Untagged
@@ -2020,6 +2005,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1267109264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267109262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f766429a0594ca94d819b49b725da287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainVotePanel: {fileID: 1267109262}
+  voteButtonContainer: {fileID: 806311305}
+  voteButtonPrefab: {fileID: 6871757184323793540, guid: e083096d244b5ae4e8e34f514806d823, type: 3}
+  instructionText: {fileID: 1434846671}
+--- !u!114 &1267109265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267109262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3945f263a1f9b4ab014a0f93cd7236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1434846669
 GameObject:
   m_ObjectHideFlags: 0
