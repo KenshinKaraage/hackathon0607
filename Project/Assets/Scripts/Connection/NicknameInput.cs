@@ -12,6 +12,11 @@ public class NicknameInput : MonoBehaviour
     {
         // 入力が終了したときにニックネームを設定する
         nicknameInput.onEndEdit.AddListener(SetNickname);
+
+        if (!string.IsNullOrEmpty(PhotonNetwork.NickName))
+        {
+            nicknameInput.text = PhotonNetwork.NickName;
+        }
     }
 
     public string getNickname()

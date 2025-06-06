@@ -9,11 +9,15 @@ using System.Linq; // 文字列操作に便利
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance; //RoomManager.Instanceでどこからでもアクセス可能になる
+    public List<RoomInfo> currentRoomList { get; private set; }
+    public string password { get; set; }
     private string tempEnteredPassword; // 一時的に保存しておく
 
     //Instanceの初期化
     private void Awake()
     {
+        currentRoomList = new();
+
         if (Instance == null)
         {
             Instance = this;
@@ -61,6 +65,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        currentRoomList = roomList;
+
         if (roomList.Count == 0)
         {
             Debug.Log("現在、利用可能な部屋はありません。");
@@ -100,8 +106,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("Room created: " + PhotonNetwork.CurrentRoom.Name);
         // IsHost = true; // 必要であればここでホストフラグを設定
         // RoomName = PhotonNetwork.CurrentRoom.Name; // 必要であれば部屋名を設定
-        Debug.Log("ホストとしてルームを作成しました。RoomSceneに遷移します。");
-        PhotonNetwork.LoadLevel("RoomScene"); // PhotonNetwork.LoadLevel を推奨
+        Debug.Log("ホストとしてルームを作成しました。RoomScene2に遷移します。");
+        PhotonNetwork.LoadLevel("RoomScene2"); // PhotonNetwork.LoadLevel を推奨
     }
 
     // 入室成功時（共通）
@@ -125,7 +131,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     if (actualRoomPassword == tempEnteredPassword)
                     {
                         Debug.Log("パスワードが一致しました。RoomSceneに遷移します。");
-                        PhotonNetwork.LoadLevel("RoomScene"); // PhotonNetwork.LoadLevel を推奨
+                        PhotonNetwork.LoadLevel("RoomScene2"); // PhotonNetwork.LoadLevel を推奨
                     }
                     else
                     {
@@ -138,14 +144,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 else // パスワードが設定されていない部屋の場合（基本的にはありえないが念のため）
                 {
                     Debug.Log("この部屋にはパスワードが設定されていませんが、パスワードなしで参加処理を継続します。RoomSceneに遷移します。");
-                    PhotonNetwork.LoadLevel("RoomScene");
+                    PhotonNetwork.LoadLevel("RoomScene2");
                 }
             }
             else // ルームに "password" プロパティが存在しない場合 (パスワードなしルーム)
             {
                 Debug.Log("この部屋はパスワードプロパティが設定されていません（パスワードなし）。RoomSceneに遷移します。");
                 // パスワードなしの部屋への参加を許可する場合
-                PhotonNetwork.LoadLevel("RoomScene");
+                PhotonNetwork.LoadLevel("RoomScene2");
             }
         }
         else // マスタークライアント（ホスト）の場合
