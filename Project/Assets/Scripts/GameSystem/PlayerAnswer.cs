@@ -55,6 +55,7 @@ public class PlayerAnswer : GameStateBehaviour
         if (string.IsNullOrEmpty(answerInputField.text)) return;
 
         CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        characterList.GetLocalPlayerCharacter().Answer = answerInputField.text;
         characterList.GetLocalPlayerCharacter().IsAnswered = true;
     }
 }

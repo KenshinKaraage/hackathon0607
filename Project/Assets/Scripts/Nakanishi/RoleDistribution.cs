@@ -49,9 +49,6 @@ namespace Test
             {
                 if (!p.IsNPC)
                 {
-                    ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
-                    props["Role"] = (int)Role.None;
-
                     HumanPlayerCharacter humanPlayerCharacter = p as HumanPlayerCharacter;
                     humanPlayerCharacter.Job = Role.None;
                 }
@@ -64,7 +61,7 @@ namespace Test
             }
 
             // playersのシャッフル (役職をランダムに配布するため)
-            Shuffle(characters);
+            characters.OrderBy(x => UnityEngine.Random.Range(0f, 1f));
 
             // 役職を格納するDictionary
             Dictionary<int, Role> playerRoles = new Dictionary<int, Role>();

@@ -37,12 +37,13 @@ public class VoteProcess : MonoBehaviourPunCallbacks
         Debug.Log($"[VoteProcess] {PhotonNetwork.LocalPlayer.NickName} が {votedTarget.Displayname} への投票を記録しようとしています。");
 
         // 代表者のみが投票を記録できるようにチェック（オプションですが推奨）
-        var localPlayerCharacter = new HumanPlayerCharacter(PhotonNetwork.LocalPlayer);
-       // if (localPlayerCharacter.Job != JobNames.REPRESENTATIVE)
-       // {
-         //   Debug.LogWarning("[VoteProcess] 代表者ではないため、投票を記録できません。");
-         //   return;
-       // }
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        var localPlayerCharacter = characterList.GetLocalPlayerCharacter();
+        if (localPlayerCharacter.Job != Role.Representative)
+        {
+            Debug.LogWarning("[VoteProcess] 代表者ではないため、投票を記録できません。");
+            return;
+        }
 
         // --- ここが中心的な処理 ---
         // ルームのカスタムプロパティとして、投票された対象の情報を設定する
@@ -60,6 +61,15 @@ public class VoteProcess : MonoBehaviourPunCallbacks
     }
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
+        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.JOB_DISTRIBUTION;
+        Debug.Log(currentState);
+        if (currentState != GameState.VOTE) return;
+        Debug.Log("isVOTE");
+        if (!propertiesThatChanged.TryGetValue("VotedTargetID", out object question)) return;
+        Debug.Log("VotedTargetID");
+        if (!PhotonNetwork.IsMasterClient) return;
+        Debug.Log("IsMasterClient");
+
         // StringBuilderを使って、変更されたプロパティの内容を整形
         var sb = new StringBuilder();
         sb.AppendLine("[VoteProcess] OnRoomPropertiesUpdate - カスタムプロパティが変更されました:");
@@ -67,10 +77,14 @@ public class VoteProcess : MonoBehaviourPunCallbacks
         foreach (var prop in propertiesThatChanged)
         {
             sb.AppendLine($"  キー: {prop.Key}, 値: {prop.Value}");
-        }
+        }   
 
         // 整形したメッセージをログに出力
         Debug.Log(sb.ToString());
+
+        //リザルトフェーズへ
+        GameFlowController controller = FindAnyObjectByType<GameFlowController>();
+        controller.SetRoomState(GameState.RESULT);
     }
 
 }

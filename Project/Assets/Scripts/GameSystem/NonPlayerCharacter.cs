@@ -9,6 +9,7 @@ public class NonPlayerCharacter : IPlayerCharacter
     {
         this._uniqueID = id;
         this._nickname = name;
+        IsAlive = true;
     }
 
     public int UniqueID { get => _uniqueID; }

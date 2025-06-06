@@ -16,6 +16,7 @@ public class Vote : GameStateBehaviour
     private bool isRepresentativeAndVoting = false;
     public override void Enter()
     {
+        FindAnyObjectByType<UIPresenter>().ResetView();
         voteOb.SetActive(true);
 
         presenter = FindAnyObjectByType<VoteUIPresenter>();
@@ -33,24 +34,27 @@ public class Vote : GameStateBehaviour
     public void OnVoteStarted()
     {
         Debug.Log("Vote phase started. Displaying characters...");
-        localPlayerCharacter = new HumanPlayerCharacter(PhotonNetwork.LocalPlayer);　　//将来的にCharacterList.GetLocalPlayerCharacter()で取得する
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        List<IPlayerCharacter> votableTargets = characterList.Characters.Where(x => x.IsAlive && x.Job != Role.Representative).ToList();
 
-       // if (localPlayerCharacter.Job == JobNames.REPRESENTATIVE && localPlayerCharacter.IsAlive) //代表者のみ投票可能
-       // {
-            Debug.Log("あなたは代表者です。投票対象を表示します。");
-            List<IPlayerCharacter> votableTargets = GetAllCharacters();
+        presenter.ShowAnswers(votableTargets.Select(x => (x.Displayname, x.Answer)).ToArray());
 
-            // --- ここが重要な変更点 ---
-            // ボタンが押された際の処理として、VoteProcess.Instance.RecordVote を渡す
-            presenter.ShowVoteUI(votableTargets, (target) => {
+        localPlayerCharacter = characterList.GetLocalPlayerCharacter();  //将来的にCharacterList.GetLocalPlayerCharacter()で取得する
+
+        bool isVoter = localPlayerCharacter.Job == Role.Representative && localPlayerCharacter.IsAlive;
+        presenter.ShowVoterView(isVoter);
+
+        if (isVoter)
+        {
+            presenter.ShowVoteUI(votableTargets, (target) =>
+            {
                 VoteProcess.Instance.RecordVote(target);
-
             });
-       // }
-       // else
-       // {
-        //    Debug.Log("投票権限がありません");
-        //}
+        }
+        else
+        {
+            Debug.Log("投票権限がありません");
+        }
     }
 
     //すべてのプレイヤーのリストを取得
