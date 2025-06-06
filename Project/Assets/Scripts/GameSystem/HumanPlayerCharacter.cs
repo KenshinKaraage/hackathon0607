@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using Photon.Realtime; // Player型を使用するために必要
 
 public class HumanPlayerCharacter : IPlayerCharacter

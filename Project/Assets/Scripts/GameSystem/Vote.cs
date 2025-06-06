@@ -16,6 +16,8 @@ public class Vote : GameStateBehaviour
     private bool isRepresentativeAndVoting = false;
     public override void Enter()
     {
+        voteOb.SetActive(true);
+
         presenter = FindAnyObjectByType<VoteUIPresenter>();
         //-エラー処理-
         if (presenter == null)
@@ -24,23 +26,31 @@ public class Vote : GameStateBehaviour
             return;
         }
 
-        voteOb.SetActive(true);
+        
         OnVoteStarted();
     }
 
     public void OnVoteStarted()
     {
         Debug.Log("Vote phase started. Displaying characters...");
+        localPlayerCharacter = new HumanPlayerCharacter(PhotonNetwork.LocalPlayer);　　//将来的にCharacterList.GetLocalPlayerCharacter()で取得する
 
-        // 1. 全てのキャラクター（プレイヤーとNPC）のリストを取得する
-        List<IPlayerCharacter> allCharacters = GetAllCharacters();
+       // if (localPlayerCharacter.Job == JobNames.REPRESENTATIVE && localPlayerCharacter.IsAlive) //代表者のみ投票可能
+       // {
+            Debug.Log("あなたは代表者です。投票対象を表示します。");
+            List<IPlayerCharacter> votableTargets = GetAllCharacters();
 
-        // 2. UIPresenterにリストを渡してUIの表示を依頼する
-        if (presenter != null)
-        {
-            // このステップでは表示するだけなので、選択時の処理（第2引数）は null を渡す
-            //presenter.ShowVoteUI(allCharacters, null);
-        }
+            // --- ここが重要な変更点 ---
+            // ボタンが押された際の処理として、VoteProcess.Instance.RecordVote を渡す
+            presenter.ShowVoteUI(votableTargets, (target) => {
+                VoteProcess.Instance.RecordVote(target);
+
+            });
+       // }
+       // else
+       // {
+        //    Debug.Log("投票権限がありません");
+        //}
     }
 
     //すべてのプレイヤーのリストを取得
