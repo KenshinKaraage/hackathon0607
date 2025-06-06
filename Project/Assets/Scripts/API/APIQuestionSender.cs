@@ -4,7 +4,6 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using Test;
 using System.Linq;
 using UnityEngine.TextCore.Text;
 
@@ -18,8 +17,8 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
     public void Send(string question)
     {
         //AIプレイヤーの人数分リクエストを送る
-        Test_CharacterList test_CharacterList = FindAnyObjectByType<Test_CharacterList>();
-        List<Test_NonPlayerCharacter> playerCharacters = test_CharacterList.Characters.Where(x => x.IsNPC).Select(x => x as Test_NonPlayerCharacter).ToList();
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        List<NonPlayerCharacter> playerCharacters = characterList.Characters.Where(x => x.IsNPC).Select(x => x as NonPlayerCharacter).ToList();
         foreach (var character in playerCharacters)
         {
             Send(character.ID, question);
@@ -55,8 +54,8 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ResetAIAnswerRPC()
     {
-        Test_CharacterList test_CharacterList = FindAnyObjectByType<Test_CharacterList>();
-        Test_IPlayerCharacter[] npcCharacters = test_CharacterList.Characters.Where(x => x.IsNPC).ToArray();
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        IPlayerCharacter[] npcCharacters = characterList.Characters.Where(x => x.IsNPC).ToArray();
 
         foreach (var character in npcCharacters)
         {
@@ -67,9 +66,9 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ChangeAIAnswer(int characterID, string answer)
     {
-        Test_CharacterList test_CharacterList = FindAnyObjectByType<Test_CharacterList>();
+        CharacterList test_CharacterList = FindAnyObjectByType<CharacterList>();
 
-        Test_IPlayerCharacter targetCharacter = test_CharacterList.Characters.Where(x => x.ID == characterID).First();
+        IPlayerCharacter targetCharacter = test_CharacterList.Characters.Where(x => x.ID == characterID).First();
         targetCharacter.Answer = answer;
         targetCharacter.IsAnswered = true;
 

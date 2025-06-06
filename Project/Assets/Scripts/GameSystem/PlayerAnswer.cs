@@ -33,7 +33,7 @@ public class PlayerAnswer : GameStateBehaviour
             sender.Send(question);
         }
 
-        Test_CharacterList characterList = FindAnyObjectByType<Test_CharacterList>();
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
         Role role = characterList.GetLocalPlayerCharacter().Job;
         if (role == Role.Werewolf)
         {
@@ -54,7 +54,7 @@ public class PlayerAnswer : GameStateBehaviour
     {
         if (string.IsNullOrEmpty(answerInputField.text)) return;
 
-        Test_CharacterList characterList = FindAnyObjectByType<Test_CharacterList>();
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
         characterList.GetLocalPlayerCharacter().IsAnswered = true;
     }
 }

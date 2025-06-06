@@ -2,7 +2,6 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using Test;
 using UnityEngine;
 using System.Linq;
 using TMPro;
@@ -19,8 +18,8 @@ public enum Role
 
 namespace Test
 {
-    //ゲーム内（JobDisctributionフェーズ）で役職配布を行うテスト
-    public class Test_JobDistribution : MonoBehaviourPunCallbacks
+    //ゲーム内（JobDisctributionフェーズ）で役職配布を行う
+    public class RoleDistribution : MonoBehaviourPunCallbacks
     {
         [SerializeField] private TMP_Text roleText;
         private bool allNPCAttributed;
@@ -42,23 +41,23 @@ namespace Test
             }
 
             //プレイヤーリストからプレイヤー取得
-            Test_CharacterList playerList = FindAnyObjectByType<Test_CharacterList>();
-            List<Test_IPlayerCharacter> characters = new List<Test_IPlayerCharacter>(playerList.Characters);
+            CharacterList playerList = FindAnyObjectByType<CharacterList>();
+            List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
 
             // 全プレイヤーの役職をリセット (再割り当ての場合に備えて)
-            foreach (Test_IPlayerCharacter p in characters)
+            foreach (IPlayerCharacter p in characters)
             {
                 if (!p.IsNPC)
                 {
                     ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
                     props["Role"] = (int)Role.None;
 
-                    Test_HumanPlayerCharacter humanPlayerCharacter = p as Test_HumanPlayerCharacter;
+                    HumanPlayerCharacter humanPlayerCharacter = p as HumanPlayerCharacter;
                     humanPlayerCharacter.Job = Role.None;
                 }
                 else
                 {
-                    Test_NonPlayerCharacter nonPlayerCharacter = p as Test_NonPlayerCharacter;
+                    NonPlayerCharacter nonPlayerCharacter = p as NonPlayerCharacter;
                     nonPlayerCharacter.Job = Role.None;
                 }
 
@@ -70,7 +69,7 @@ namespace Test
             // 役職を格納するDictionary
             Dictionary<int, Role> playerRoles = new Dictionary<int, Role>();
 
-            List<Test_IPlayerCharacter> humanPlayerCharacters = characters.Where(x => !x.IsNPC).ToList();
+            List<IPlayerCharacter> humanPlayerCharacters = characters.Where(x => !x.IsNPC).ToList();
             // 代表者 (人間) 1人
             if (humanPlayerCharacters.Count >= 1)
             {
@@ -102,9 +101,9 @@ namespace Test
         [PunRPC]
         private void AssignRoleToAI()
         {
-            Test_CharacterList playerList = FindAnyObjectByType<Test_CharacterList>();
-            List<Test_IPlayerCharacter> characters = new List<Test_IPlayerCharacter>(playerList.Characters);
-            List<Test_IPlayerCharacter> npcPlayers = characters.Where(x => x.IsNPC).ToList();
+            CharacterList playerList = FindAnyObjectByType<CharacterList>();
+            List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
+            List<IPlayerCharacter> npcPlayers = characters.Where(x => x.IsNPC).ToList();
 
 
             int villagerAICount = 0;
@@ -148,13 +147,13 @@ namespace Test
         /// </summary>
         private async void DisplayPlayerRoles()
         {
-            Test_CharacterList playerList = FindAnyObjectByType<Test_CharacterList>();
-            List<Test_IPlayerCharacter> characters = new List<Test_IPlayerCharacter>(playerList.Characters);
-            List<Test_IPlayerCharacter> humanPlayerCharacters = characters.Where(x => !x.IsNPC).ToList();
+            CharacterList playerList = FindAnyObjectByType<CharacterList>();
+            List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
+            List<IPlayerCharacter> humanPlayerCharacters = characters.Where(x => !x.IsNPC).ToList();
 
-            foreach (Test_IPlayerCharacter player in humanPlayerCharacters)
+            foreach (IPlayerCharacter player in humanPlayerCharacters)
             {
-                Test_HumanPlayerCharacter humanPlayerCharacter = player as Test_HumanPlayerCharacter;
+                HumanPlayerCharacter humanPlayerCharacter = player as HumanPlayerCharacter;
                 if (!humanPlayerCharacter.GetPhotonPlayer().IsLocal) continue;
 
                 roleText.text = $"あなたは{player.Job}です";
@@ -176,8 +175,8 @@ namespace Test
             if (currentState != GameState.JOB_DISTRIBUTION) return;
             if (!changedProps.TryGetValue("Job", out object job)) return;
 
-            Test_CharacterList playerList = FindAnyObjectByType<Test_CharacterList>();
-            List<Test_IPlayerCharacter> characters = new List<Test_IPlayerCharacter>(playerList.Characters);
+            CharacterList playerList = FindAnyObjectByType<CharacterList>();
+            List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
 
             Debug.Log("human役職割り当て " + job);
             if (characters.All(x => x.Job != Role.None) && allNPCAttributed)
@@ -195,8 +194,8 @@ namespace Test
 
             Debug.Log("ai役職割り当て ");
 
-            Test_CharacterList playerList = FindAnyObjectByType<Test_CharacterList>();
-            List<Test_IPlayerCharacter> characters = new List<Test_IPlayerCharacter>(playerList.Characters);
+            CharacterList playerList = FindAnyObjectByType<CharacterList>();
+            List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
             if (characters.All(x => x.Job != Role.None))
             {
                 //全プレイヤーが回答済みなら役職を表示させる

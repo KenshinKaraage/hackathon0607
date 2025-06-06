@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using Test;
 
 public class Question : GameStateBehaviour
 {
@@ -20,7 +19,7 @@ public class Question : GameStateBehaviour
         presenter.ResetView();
         viewOb.SetActive(true);
 
-        Test_CharacterList characterList = FindAnyObjectByType<Test_CharacterList>();
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
         Role role = characterList.GetLocalPlayerCharacter().Job;
 
         if (role == Role.Representative)

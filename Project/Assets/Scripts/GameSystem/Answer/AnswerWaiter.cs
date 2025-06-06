@@ -5,7 +5,6 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using Test;
 
 public class AnswerWaiter : MonoBehaviourPunCallbacks
 {
@@ -39,9 +38,9 @@ public class AnswerWaiter : MonoBehaviourPunCallbacks
     private void CheckAllPlayerAnswer()
     {
         //質問者以外のプレイヤー（人間）を取得
-        Test_CharacterList characterList = FindAnyObjectByType<Test_CharacterList>();
+        CharacterList characterList = FindAnyObjectByType<CharacterList>();
 
-        Test_IPlayerCharacter[] characters = characterList.Characters.ToArray();
+        IPlayerCharacter[] characters = characterList.Characters.ToArray();
 
         if (characters.Where(x => x.Job != Role.Representative).All(x => x.IsAnswered))
         {

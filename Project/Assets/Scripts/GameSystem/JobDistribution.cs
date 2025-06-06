@@ -4,7 +4,7 @@ using Test;
 public class JobDistribution : GameStateBehaviour
 {
     [SerializeField] private GameObject viewOb;
-    [SerializeField] private Test_JobDistribution jobDistribution;
+    [SerializeField] private RoleDistribution jobDistribution;
 
     public override void Enter()
     {
