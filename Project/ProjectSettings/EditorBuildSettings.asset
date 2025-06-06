@@ -8,18 +8,30 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TitleScene.unity
     guid: 72617195d0bf4440bb73269b51364e3f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LobbyScene.unity
     guid: e5d0e22d8270e6e44b6480f2560c1a1b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RoomScene.unity
     guid: a31177549a510a94983c1ffc97dd70d3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: b4a3ec6b771f042c6a480d3b10919033
+  - enabled: 1
+    path: Assets/SatouScene/Scenes/TitleScene.unity
+    guid: a5ef0139969054b489c2d643a66e9ddc
+  - enabled: 1
+    path: Assets/SatouScene/Scenes/LobbyScene.unity
+    guid: 2736d7bc5eb68c747859e6e390624f19
+  - enabled: 1
+    path: Assets/SatouScene/Scenes/RoomScene.unity
+    guid: 4b0a8275784808f41b65063c51aab89f
+  - enabled: 1
+    path: Assets/SatouScene/Scenes/GameScene.unity
+    guid: 6122a9d4ab01d65408e8cfa5c4eea58c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

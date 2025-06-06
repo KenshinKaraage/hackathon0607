@@ -10,27 +10,33 @@ public class VoteUIPresenter : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject mainVotePanel; // 投票UI全体の親オブジェクト
-    [SerializeField] private GameObject waitingPanel; // 待機中パネル
-    [SerializeField] private GameObject confirmationPanel; // 投票完了後パネル
 
     [Header("UI Components")]
     [SerializeField] private Transform voteButtonContainer; // ボタンを生成する場所
     [SerializeField] private GameObject voteButtonPrefab; // 投票ボタンのプレハブ
     [SerializeField] private TextMeshProUGUI instructionText; // 指示テキスト (TextMeshProの場合)
-    [SerializeField] private TextMeshProUGUI waitingText; // 待機中テキスト
-    [SerializeField] private TextMeshProUGUI confirmationText; // 投票完了後テキスト
+
+    // 他のパネルの参照（今後のステップで使用）
+    // [SerializeField] private GameObject waitingPanel;
+    // [SerializeField] private GameObject confirmationPanel;
 
     private Action<IPlayerCharacter> onTargetSelectedCallback;
 
-    /// <summary>
-    /// このPresenterが管理する全てのUIを非表示にします。
-    /// </summary>
+    void Awake()
+    {
+        // 開始時は全てのパネルを非表示にしておく
+        HideAllVotePanels();
+    }
+
+    // このPresenterが管理する全てのUIを非表示に
     public void HideAllVotePanels()
     {
         if (mainVotePanel != null) mainVotePanel.SetActive(false);
-        if (waitingPanel != null) waitingPanel.SetActive(false);
-        if (confirmationPanel != null) confirmationPanel.SetActive(false);
+        // if (waitingPanel != null) waitingPanel.SetActive(false);
+        // if (confirmationPanel != null) confirmationPanel.SetActive(false);
     }
+
+
 
     /// <summary>
     /// 投票UIを表示し、キャラクターのリストからボタンを生成します。
@@ -43,7 +49,7 @@ public class VoteUIPresenter : MonoBehaviour
         if (mainVotePanel == null || voteButtonContainer == null || voteButtonPrefab == null)
         {
             Debug.LogError("Vote UI elements are not assigned in VotePresenter's inspector.");
-            //return;
+            return;
         }
 
         HideAllVotePanels(); // 他のパネルを隠す
@@ -54,7 +60,7 @@ public class VoteUIPresenter : MonoBehaviour
         // 指示テキストを更新
         if (instructionText != null)
         {
-            instructionText.text = "追放する容疑者を選んでください";
+            instructionText.text = "投票してください"; // 今回の目的に合わせてテキストを変更
         }
 
         // 以前のボタンをクリア
@@ -65,69 +71,39 @@ public class VoteUIPresenter : MonoBehaviour
 
         if (targetList == null || targetList.Count == 0)
         {
-            if (instructionText != null) instructionText.text = "投票可能な対象がいません";
+            if (instructionText != null) instructionText.text = "表示するプレイヤーがいません";
             return;
         }
 
         // リスト内の各キャラクターに対応するボタンを生成
         foreach (IPlayerCharacter target in targetList)
         {
+            Debug.Log("player:" + target.Displayname);
             GameObject buttonGO = Instantiate(voteButtonPrefab, voteButtonContainer);
 
+            // TextMeshProを使っている場合
             TextMeshProUGUI buttonText = buttonGO.GetComponentInChildren<TextMeshProUGUI>();
+            // 標準のUI Textを使っている場合は、下の行のコメントを解除して上の行をコメントアウト
+            // Text buttonText = buttonGO.GetComponentInChildren<Text>();
+
             if (buttonText != null)
             {
-                buttonText.text = target.Displayname;
+                buttonText.text = target.Displayname; // キャラクターの名前を表示
             }
 
             Button button = buttonGO.GetComponent<Button>();
             if (button != null)
             {
-                // onSelectedがnullでなければ、クリックイベントを設定
+                // onSelectedがnull、または投票機能がまだ不要な場合は、
+                // ボタンを操作不可にしておく
+                button.interactable = (onSelected != null);
+
                 if (onSelected != null)
                 {
                     button.onClick.AddListener(() => {
                         this.onTargetSelectedCallback?.Invoke(target);
                     });
                 }
-                else
-                {
-                    // 表示するだけの場合はボタンを操作不可にする
-                    button.interactable = false;
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// 「代表者の投票を待っています...」などの待機UIを表示します。
-    /// </summary>
-    public void ShowWaitingUI()
-    {
-        HideAllVotePanels();
-        if (waitingPanel != null)
-        {
-            waitingPanel.SetActive(true);
-            if (waitingText != null)
-            {
-                waitingText.text = "代表者の投票を待っています...";
-            }
-        }
-    }
-
-    /// <summary>
-    /// 「〇〇に投票しました」という確認UIを表示します。
-    /// </summary>
-    /// <param name="votedTarget">投票した対象</param>
-    public void ShowConfirmationUI(IPlayerCharacter votedTarget)
-    {
-        HideAllVotePanels();
-        if (confirmationPanel != null && votedTarget != null)
-        {
-            confirmationPanel.SetActive(true);
-            if (confirmationText != null)
-            {
-                confirmationText.text = $"{votedTarget.Displayname} に投票しました。";
             }
         }
     }

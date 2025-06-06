@@ -39,7 +39,7 @@ public class Vote : GameStateBehaviour
         if (presenter != null)
         {
             // このステップでは表示するだけなので、選択時の処理（第2引数）は null を渡す
-            //presenter.ShowVoteUI(allCharacters, null);
+            presenter.ShowVoteUI(allCharacters, null);
         }
     }
 
@@ -97,6 +97,7 @@ public class Vote : GameStateBehaviour
         return characters;
     }
 
+    //カスタムプロパティで投票先を決めれるようにする。
 
     private void OnTargetSelectedForVote(IPlayerCharacter selectedTarget)
     {
