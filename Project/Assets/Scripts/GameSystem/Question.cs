@@ -19,7 +19,7 @@ public class Question : GameStateBehaviour
         presenter.ResetView();
         viewOb.SetActive(true);
 
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         Role role = characterList.GetLocalPlayerCharacter().Job;
 
         if (role == Role.Representative)

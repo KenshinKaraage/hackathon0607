@@ -37,7 +37,7 @@ public class VoteProcess : MonoBehaviourPunCallbacks
         Debug.Log($"[VoteProcess] {PhotonNetwork.LocalPlayer.NickName} が {votedTarget.Displayname} への投票を記録しようとしています。");
 
         // 代表者のみが投票を記録できるようにチェック（オプションですが推奨）
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         var localPlayerCharacter = characterList.GetLocalPlayerCharacter();
         if (localPlayerCharacter.Job != Role.Representative)
         {

@@ -38,7 +38,7 @@ public class AnswerWaiter : MonoBehaviourPunCallbacks
     private void CheckAllPlayerAnswer()
     {
         //質問者以外のプレイヤー（人間）を取得
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
 
         IPlayerCharacter[] characters = characterList.Characters.ToArray();
 

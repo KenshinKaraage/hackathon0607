@@ -16,13 +16,18 @@ public class HumanPlayerCharacter : IPlayerCharacter
     public string Displayname => photonPlayer.NickName;
 
     //----ここからカスタムプロパティに役職と生存の情報を格納している前提-------
-
-    //プレイヤーのカスタムプロパティからJobを取得する
     public Role Job
     {
         get => photonPlayer.CustomProperties.TryGetValue("Job", out object job) ? (Role)job : Role.None;
         set => UpdateCustomProperty("Job", value);
     }
+    //プレイヤーのカスタムプロパティからJobを取得する
+    public int CharacterIndex
+    {
+        get => photonPlayer.CustomProperties.TryGetValue("CharacterIndex", out object index) ? (int)index : 0;
+        set => UpdateCustomProperty("CharacterIndex", value);
+    }
+
     //IsAliveを取得する
     public bool IsAlive
     {

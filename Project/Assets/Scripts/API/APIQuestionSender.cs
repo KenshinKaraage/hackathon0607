@@ -9,7 +9,6 @@ using UnityEngine.TextCore.Text;
 
 public class APIQuestionSender : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private PromptCharacter[] character;
     [SerializeField, TextArea(1, 20)] private string basePrompt;
 
     public bool AllAPIAnswered { get; private set; }
@@ -17,7 +16,7 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
     public void Send(string question)
     {
         //AIプレイヤーの人数分リクエストを送る
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         List<NonPlayerCharacter> playerCharacters = characterList.Characters.Where(x => x.IsNPC).Select(x => x as NonPlayerCharacter).ToList();
         foreach (var character in playerCharacters)
         {
@@ -25,12 +24,17 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
         }
     }
 
-    private async void Send(int characterID, string question)
+    private async void Send(int ID, string question)
     {
         APIConnector apiConnector = FindAnyObjectByType<APIConnector>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
+        CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
 
-        //仮にキャラクターを全員パリピにする
-        string prompt = character[0] + "\n" + basePrompt;
+        IPlayerCharacter player = characterList.Characters.Where(x => x.ID == ID).First();
+
+        CharacterData characterData = characterDataList.CharacterDatas[player.CharacterIndex];
+
+        string prompt = characterData.characterPrompt + "\n" + basePrompt;
         string result = await apiConnector.SendRequest(prompt, question);
 
 
@@ -39,7 +43,7 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
 
         Debug.Log("AIAnswered:" + answer.word);
 
-        photonView.RPC(nameof(ChangeAIAnswer), RpcTarget.All, characterID, answer.word);
+        photonView.RPC(nameof(ChangeAIAnswer), RpcTarget.All, ID, answer.word);
     }
 
     public void ResetAIAnswer()
@@ -54,7 +58,7 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ResetAIAnswerRPC()
     {
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         IPlayerCharacter[] npcCharacters = characterList.Characters.Where(x => x.IsNPC).ToArray();
 
         foreach (var character in npcCharacters)
@@ -66,7 +70,7 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ChangeAIAnswer(int characterID, string answer)
     {
-        CharacterList test_CharacterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList test_CharacterList = FindAnyObjectByType<PlayerCharacterList>();
 
         IPlayerCharacter targetCharacter = test_CharacterList.Characters.Where(x => x.ID == characterID).First();
         targetCharacter.Answer = answer;

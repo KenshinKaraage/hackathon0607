@@ -25,7 +25,7 @@ public class ResultView : GameStateBehaviour
         }
 
         // 処刑されたプレイヤー
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         IPlayerCharacter executedPlayer = characterList.Characters.Where(x => x.ID == executedPlayerID).First();
 
         // ① 処刑情報の表示
