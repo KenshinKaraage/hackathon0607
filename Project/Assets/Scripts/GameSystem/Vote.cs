@@ -34,7 +34,7 @@ public class Vote : GameStateBehaviour
     public void OnVoteStarted()
     {
         Debug.Log("Vote phase started. Displaying characters...");
-        CharacterList characterList = FindAnyObjectByType<CharacterList>();
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         List<IPlayerCharacter> votableTargets = characterList.Characters.Where(x => x.IsAlive && x.Job != Role.Representative).ToList();
 
         presenter.ShowAnswers(votableTargets.Select(x => (x.Displayname, x.Answer)).ToArray());

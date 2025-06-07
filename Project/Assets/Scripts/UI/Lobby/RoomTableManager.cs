@@ -24,7 +24,7 @@ public class RoomTableManager : MonoBehaviourPunCallbacks
         while (true)
         {
             yield return wait;
-            if (currentRoomInfos.SequenceEqual(RoomManager.Instance.currentRoomList))
+            if (!currentRoomInfos.SequenceEqual(RoomManager.Instance.currentRoomList))
             {
                 GeenrateRoomTable();
             }

@@ -14,6 +14,7 @@ public class NonPlayerCharacter : IPlayerCharacter
 
     public int UniqueID { get => _uniqueID; }
     public string Nickname { get => _nickname; }
+    public int CharacterIndex { get; set; }
     public Role Job { get; set; }         // 役職
     public bool IsAlive { get; set; }
 
