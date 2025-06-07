@@ -8,13 +8,6 @@ using TMPro; // TextMeshProを使用している場合はこれも必要
 
 public class VoteUIPresenter : MonoBehaviour
 {
-    [SerializeField] private GameObject voterOb;
-    [SerializeField] private GameObject nonvoterOb;
-
-    [Header("Answers")]
-    [SerializeField] private Transform elementsParent; // 投票UI全体の親オブジェクト
-    private AnswerElement[] answerElements;
-
     [Header("UI Panels")]
     [SerializeField] private GameObject mainVotePanel; // 投票UI全体の親オブジェクト
 
@@ -33,8 +26,6 @@ public class VoteUIPresenter : MonoBehaviour
     {
         // 開始時は全てのパネルを非表示にしておく
         HideAllVotePanels();
-
-        answerElements = elementsParent.GetComponentsInChildren<AnswerElement>();
     }
 
     // このPresenterが管理する全てのUIを非表示に
@@ -43,39 +34,6 @@ public class VoteUIPresenter : MonoBehaviour
         if (mainVotePanel != null) mainVotePanel.SetActive(false);
         // if (waitingPanel != null) waitingPanel.SetActive(false);
         // if (confirmationPanel != null) confirmationPanel.SetActive(false);
-    }
-
-    //答えを表示
-    public void ShowAnswers((string name, string answer)[] answers)
-    {
-        for (int i = 0; i < answerElements.Length; i++)
-        {
-            if (i < answers.Length)
-            {
-                (string name, string answer) = answers[i];
-                answerElements[i].SetView(name, answer);
-                answerElements[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                answerElements[i].gameObject.SetActive(false);
-            }
-        }   
-    }
-
-    //投票者か投票者じゃないかで見た目を変える
-    public void ShowVoterView(bool isVoter)
-    {
-        if (isVoter)
-        {
-            voterOb.SetActive(true);
-            nonvoterOb.SetActive(false);
-        }
-        else
-        {
-            voterOb.SetActive(false);
-            nonvoterOb.SetActive(true);
-        }
     }
 
     /// <summary>

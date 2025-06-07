@@ -42,6 +42,7 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
         AnswerContent answer = JsonUtility.FromJson<AnswerContent>(response.answer);
 
         Debug.Log("AIAnswered:" + answer.word);
+        Debug.Log($"ID:{ID}, Character{player.CharacterIndex}");
 
         photonView.RPC(nameof(ChangeAIAnswer), RpcTarget.All, ID, answer.word);
     }
@@ -89,8 +90,6 @@ public class APIQuestionSender : MonoBehaviourPunCallbacks
             else
             {
                 Debug.Log("NotAllAIAnswered");
-                Debug.Log(test_CharacterList.Characters.Where(x => x.IsNPC && x.IsAnswered).Count());
-
             }
         }
     }

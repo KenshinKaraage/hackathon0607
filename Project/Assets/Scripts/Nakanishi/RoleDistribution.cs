@@ -27,9 +27,7 @@ public class Assignment
 //キャラクター配布も行う。
 public class RoleDistribution : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private TMP_Text roleText;
-    [SerializeField] private TMP_Text characterText;
-    [SerializeField] private TMP_Text characterDescriptionText;
+    private bool allPlayerShuffled;
 
     //AssingnmentをRPCの引数にするのに必要
     void Awake()
@@ -41,9 +39,10 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
     /// 役職配布
     /// MasterClientのみが呼び出す。プレイヤーが全員揃った後などに呼び出す想定。
     /// </summary>
-    public void AssignRoles()
+    public async void AssignRoles()
     {
-        roleText.text = $"割り当て中";
+        UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
+        body.ShowWait("割り当て中");
 
         if (!PhotonNetwork.IsMasterClient)
         {
@@ -53,11 +52,18 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
 
         //プレイヤーリストからプレイヤー取得
         PlayerCharacterList playerList = FindAnyObjectByType<PlayerCharacterList>();
-        List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
+        // playersのシャッフル (役職をランダムに配布するため)
+        allPlayerShuffled = false;
+        playerList.ResetShuffled();
+        int[] indeces = Enumerable.Range(0, playerList.Characters.Count()).OrderBy(x => UnityEngine.Random.Range(0f, 1f)).ToArray();
+        playerList.Shuffle(indeces);
+
+        await UniTask.WaitUntil(() => allPlayerShuffled);
+
         List<Assignment> assignments = new List<Assignment>();
 
         // 全プレイヤーの役職をリセット (再割り当ての場合に備えて)
-        foreach (IPlayerCharacter p in characters)
+        foreach (IPlayerCharacter p in playerList.Characters)
         {
             if (!p.IsNPC)
             {
@@ -72,13 +78,7 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
 
         }
 
-        // playersのシャッフル (役職をランダムに配布するため)
-        characters.OrderBy(x => UnityEngine.Random.Range(0f, 1f));
-
-        // 役職を格納するDictionary
-        Dictionary<int, Role> playerRoles = new Dictionary<int, Role>();
-
-        List<IPlayerCharacter> humanPlayerCharacters = characters.Where(x => !x.IsNPC).ToList();
+        List<IPlayerCharacter> humanPlayerCharacters = playerList.Characters.Where(x => !x.IsNPC).ToList();
         // 代表者 (人間) 1人
         if (humanPlayerCharacters.Count >= 1)
         {
@@ -103,7 +103,7 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
 
 
         //AIに役職を割り当てる
-        List<IPlayerCharacter> npcPlayers = characters.Where(x => x.IsNPC).ToList();
+        List<IPlayerCharacter> npcPlayers = playerList.Characters.Where(x => x.IsNPC).ToList();
         int villagerAICount = 0;
         for (int i = 0; i < npcPlayers.Count; i++) // 2人目以降のプレイヤーに対して
         {
@@ -124,21 +124,24 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
         CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
         int representetiveID = assignments.Where(x => x.role == (int)Role.Representative).First().id;
         Assignment representativeAssignment = assignments.Where(x => x.id == representetiveID).First();
-        representativeAssignment.characterIndex = 0;
+        int representativeIndex = assignments.IndexOf(representativeAssignment);
+        assignments[representativeIndex].characterIndex = 0;
 
-        List<IPlayerCharacter> nonRepresentatives = characters.Where(x => x.ID != representetiveID).ToList();
-        List<int> characterIndeces = new List<int>(Enumerable.Range(1, characterDataList.CharacterDatas.Count())).OrderBy(x => UnityEngine.Random.Range(0f, 1f)).ToList();
+        List<IPlayerCharacter> nonRepresentatives = playerList.Characters.Where(x => x.ID != representetiveID).ToList();
+        List<int> characterIndeces = Enumerable.Range(1, characterDataList.CharacterDatas.Count() - 1).OrderBy(x => UnityEngine.Random.Range(0f, 1f)).ToList();
+
         for (int i = 0; i < nonRepresentatives.Count; i++)
         {
             Assignment assignment = assignments.Where(x => x.id == nonRepresentatives[i].ID).First();
+            int index = assignments.IndexOf(assignment);
 
             if (i < characterIndeces.Count)
             {
-                assignment.characterIndex = characterIndeces[i];
+                assignments[index].characterIndex = characterIndeces[i];
             }
             else
             {
-                assignment.characterIndex = characterIndeces[0];
+                assignments[index].characterIndex = characterIndeces[0];
             }
         }
 
@@ -192,11 +195,10 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// 各プレイヤーの役職を表示する (デバッグ用)
+    /// 各プレイヤーの役職を表示する
     /// </summary>
     private async void DisplayPlayerRoles()
     {
-
         PlayerCharacterList playerList = FindAnyObjectByType<PlayerCharacterList>();
         List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
         List<IPlayerCharacter> humanPlayerCharacters = characters.Where(x => !x.IsNPC).ToList();
@@ -207,10 +209,14 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
             if (!humanPlayerCharacter.GetPhotonPlayer().IsLocal) continue;
             CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
 
-            roleText.text = $"あなたは{player.Job}です";
-            characterText.text = $"キャラクター：{characterDataList.CharacterDatas[player.CharacterIndex].characterName}";
-            characterDescriptionText.text = $"説明：{characterDataList.CharacterDatas[player.CharacterIndex].description}";
+            UIPresenter_Header header = FindAnyObjectByType<UIPresenter_Header>();
+            header.SetView("役職配布", player.Job, characterDataList.CharacterDatas[player.CharacterIndex].imageSprite, player.Displayname, characterDataList.CharacterDatas[player.CharacterIndex].characterName);
 
+            UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
+            body.ShowDistribution(player.Job, characterDataList.CharacterDatas[player.CharacterIndex].imageSprite, characterDataList.CharacterDatas[player.CharacterIndex].characterName, characterDataList.CharacterDatas[player.CharacterIndex].description);
+
+            UIPresenter_Footer footer = FindAnyObjectByType<UIPresenter_Footer>();
+            footer.Hide();
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -226,16 +232,23 @@ public class RoleDistribution : MonoBehaviourPunCallbacks
     {
         GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.RESULT;
         if (currentState != GameState.JOB_DISTRIBUTION) return;
-        if (!changedProps.TryGetValue("Job", out object job)) return;
-
-        PlayerCharacterList playerList = FindAnyObjectByType<PlayerCharacterList>();
-        List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
-
-        if (characters.All(x => x.Job != Role.None && x.CharacterIndex != -2))
+        if (changedProps.TryGetValue("Job", out object job) || changedProps.TryGetValue("CharacterIndex", out object index))
         {
-            //全プレイヤーが回答済みなら役職を表示させる
-            DisplayPlayerRoles();
-        }
+            PlayerCharacterList playerList = FindAnyObjectByType<PlayerCharacterList>();
+            List<IPlayerCharacter> characters = new List<IPlayerCharacter>(playerList.Characters);
 
+            if (characters.All(x => x.Job != Role.None && x.CharacterIndex != -2))
+            {
+                //全プレイヤーが回答済みなら役職を表示させる
+                DisplayPlayerRoles();
+            }
+        }
+        else if(changedProps.TryGetValue("Shuffled", out object shuffle))
+        {
+            if (PhotonNetwork.PlayerList.All(x => x.CustomProperties.TryGetValue("Shuffled", out object shuffle) ? (bool)shuffle : false))
+            {
+                allPlayerShuffled = true;
+            }
+        }
     }
 }

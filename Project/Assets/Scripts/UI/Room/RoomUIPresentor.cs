@@ -21,7 +21,7 @@ public class RoomUIPresentor : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        nameText.text = PhotonNetwork.CurrentRoom.Name;
+        nameText.text = $"{PhotonNetwork.CurrentRoom.Name}の部屋";
         passwordText.text = $"パスワード:{RoomManager.Instance.password}";
         elements = elementsParent.GetComponentsInChildren<PlayerViewElement>(true);
         GeneratePlayerTable();
