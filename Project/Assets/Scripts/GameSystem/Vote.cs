@@ -7,7 +7,7 @@ using System.Text;
 
 public class Vote : GameStateBehaviour
 {
-    [SerializeField] private GameObject voteOb;
+
     private VoteUIPresenter presenter;
 
     public GameFlowController gameFlowController;
@@ -16,17 +16,8 @@ public class Vote : GameStateBehaviour
     private bool isRepresentativeAndVoting = false;
     public override void Enter()
     {
-        FindAnyObjectByType<UIPresenter>().ResetView();
-        voteOb.SetActive(true);
-
-        presenter = FindAnyObjectByType<VoteUIPresenter>();
-        //-エラー処理-
-        if (presenter == null)
-        {
-            Debug.LogError("[Vote.cs] UIPresenterが見つかりません。");
-            return;
-        }
-
+        UIPresenter_Header header = FindAnyObjectByType<UIPresenter_Header>();
+        header.SetView("投票");
         
         OnVoteStarted();
     }
@@ -37,23 +28,28 @@ public class Vote : GameStateBehaviour
         PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         List<IPlayerCharacter> votableTargets = characterList.Characters.Where(x => x.IsAlive && x.Job != Role.Representative).ToList();
 
-        presenter.ShowAnswers(votableTargets.Select(x => (x.Displayname, x.Answer)).ToArray());
+        //回答一覧表示
+        UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
+        CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
+        Debug.Log("characterDataList.CharacterDatas.Count:" + characterDataList.CharacterDatas.Count());
+        System.Action<IPlayerCharacter> action = VoteProcess.Instance.OnButtonSelected;
 
+        
         localPlayerCharacter = characterList.GetLocalPlayerCharacter();  //将来的にCharacterList.GetLocalPlayerCharacter()で取得する
 
-        bool isVoter = localPlayerCharacter.Job == Role.Representative && localPlayerCharacter.IsAlive;
-        presenter.ShowVoterView(isVoter);
+        //投票者、非投票者でfooterの表示を変える
+        UIPresenter_Footer footer = FindAnyObjectByType<UIPresenter_Footer>();
 
+        bool isVoter = localPlayerCharacter.Job == Role.Representative && localPlayerCharacter.IsAlive;
         if (isVoter)
         {
-            presenter.ShowVoteUI(votableTargets, (target) =>
-            {
-                VoteProcess.Instance.RecordVote(target);
-            });
+            body.ShowAnswers(votableTargets.Select(x => (x.Answer, x)).ToArray(), action);
+            footer.ShowFooterText("投票先を選んでください");
         }
         else
         {
-            Debug.Log("投票権限がありません");
+            body.ShowAnswers(votableTargets.Select(x => x.Answer).ToArray());
+            footer.ShowFooterText("代表者が投票先を選んでいます");
         }
     }
 

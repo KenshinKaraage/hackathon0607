@@ -1,5 +1,6 @@
 public enum GameState
 {
+    READY,
     JOB_DISTRIBUTION,
     QUESTION,
     ANSWER,

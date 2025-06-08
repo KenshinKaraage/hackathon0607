@@ -9,6 +9,7 @@ public class VoteProcess : MonoBehaviourPunCallbacks
     // シングルトンとしてインスタンスを公開
     public static VoteProcess Instance { get; private set; }
 
+    private IPlayerCharacter selectedPlayer;
     void Awake()
     {
         // シングルトンの設定
@@ -20,6 +21,21 @@ public class VoteProcess : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+    }
+
+    public void OnButtonSelected(IPlayerCharacter votedTarget)
+    {
+        selectedPlayer = votedTarget;
+
+        UIPresenter_Footer footer = FindAnyObjectByType<UIPresenter_Footer>();
+        CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
+
+        footer.ShowSubmit($"{characterDataList.CharacterDatas[votedTarget.CharacterIndex].characterName}に投票しますか？");
+    }
+
+    public void OnClickSubmit()
+    {
+        RecordVote(selectedPlayer);
     }
 
     /// <summary>
@@ -62,13 +78,9 @@ public class VoteProcess : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.JOB_DISTRIBUTION;
-        Debug.Log(currentState);
         if (currentState != GameState.VOTE) return;
-        Debug.Log("isVOTE");
         if (!propertiesThatChanged.TryGetValue("VotedTargetID", out object question)) return;
-        Debug.Log("VotedTargetID");
         if (!PhotonNetwork.IsMasterClient) return;
-        Debug.Log("IsMasterClient");
 
         // StringBuilderを使って、変更されたプロパティの内容を整形
         var sb = new StringBuilder();

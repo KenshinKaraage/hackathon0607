@@ -13,7 +13,7 @@ public class GameFlowController : MonoBehaviourPunCallbacks
     private Vote vote;
     private ResultView result;
 
-    private Dictionary<GameState, GameStateBehaviour> gameStateDict = new();
+    private Dictionary<GameState, GameStateBehaviour> gameStateDict;
 
     private void Awake()
     {
@@ -22,16 +22,6 @@ public class GameFlowController : MonoBehaviourPunCallbacks
         playerAnswer = GetComponent<PlayerAnswer>();
         vote = GetComponent<Vote>();
         result = GetComponent<ResultView>();
-
-        gameStateDict = new Dictionary<GameState, GameStateBehaviour>()
-        {
-            {GameState.JOB_DISTRIBUTION, distribution },
-            {GameState.QUESTION, question },
-            {GameState.ANSWER, playerAnswer },
-            {GameState.VOTE, vote },
-            {GameState.RESULT, result },
-
-        };
     }
 
     public void Initialize()
@@ -53,7 +43,27 @@ public class GameFlowController : MonoBehaviourPunCallbacks
     {
         if (changedProps.TryGetValue("GameState", out object stateValue))
         {
-            gameStateDict[(GameState)stateValue].Enter();
+            if (gameStateDict == null)
+            {
+                SetDictionary();
+            }
+
+            if (gameStateDict.ContainsKey((GameState)stateValue))
+            {
+                gameStateDict[(GameState)stateValue].Enter();
+            }
         }
+    }
+
+    public void SetDictionary()
+    {
+        gameStateDict = new Dictionary<GameState, GameStateBehaviour>()
+        {
+            {GameState.JOB_DISTRIBUTION, distribution },
+            {GameState.QUESTION, question },
+            {GameState.ANSWER, playerAnswer },
+            {GameState.VOTE, vote },
+            {GameState.RESULT, result },
+        };
     }
 }

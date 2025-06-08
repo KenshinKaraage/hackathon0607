@@ -1,12 +1,14 @@
 using Photon.Pun;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using System.Linq;
 using Photon.Realtime;
+using System;
+using UnityEngine.InputSystem.LowLevel;
 
 //ゲーム開始時にプレイヤー配布
-public class PlayerCharacterList : MonoBehaviour
+public class PlayerCharacterList : MonoBehaviourPunCallbacks
 {
     private List<IPlayerCharacter> _characters = new List<IPlayerCharacter>();
     public List<IPlayerCharacter> Characters => _characters;
@@ -41,5 +43,37 @@ public class PlayerCharacterList : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void ResetShuffled()
+    {
+        photonView.RPC(nameof(ResetRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void ResetRPC()
+    {
+        var props = new Hashtable { { "Shuffled", false } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
+    public void Shuffle(int[] indeces)
+    {
+        photonView.RPC(nameof(ShuffleRPC), RpcTarget.All, indeces);
+    }
+
+    [PunRPC]
+    private void ShuffleRPC(int[] indeces)
+    {
+        List<IPlayerCharacter> playerCharacters = new List<IPlayerCharacter>(Characters);
+        for (int i = 0; i < indeces.Length; i++)
+        {
+            playerCharacters[i] = Characters[indeces[i]];
+        }
+
+        _characters = playerCharacters;
+
+        var props = new Hashtable { { "Shuffled", true } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 }

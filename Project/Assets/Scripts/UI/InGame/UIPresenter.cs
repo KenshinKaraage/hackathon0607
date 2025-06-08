@@ -8,6 +8,7 @@ public class UIPresenter : MonoBehaviour
     [SerializeField] private GameObject voteOb;
     [SerializeField] private GameObject resultOb;
 
+
     public void ResetView()
     {
         distributionOb.SetActive(false);
@@ -16,6 +17,4 @@ public class UIPresenter : MonoBehaviour
         voteOb.SetActive(false);
         resultOb.SetActive(false);
     }
-
-
 }

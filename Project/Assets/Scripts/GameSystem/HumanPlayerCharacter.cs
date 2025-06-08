@@ -24,7 +24,7 @@ public class HumanPlayerCharacter : IPlayerCharacter
     //プレイヤーのカスタムプロパティからJobを取得する
     public int CharacterIndex
     {
-        get => photonPlayer.CustomProperties.TryGetValue("CharacterIndex", out object index) ? (int)index : 0;
+        get => photonPlayer.CustomProperties.TryGetValue("CharacterIndex", out object index) ? (int)index : -2;
         set => UpdateCustomProperty("CharacterIndex", value);
     }
 
