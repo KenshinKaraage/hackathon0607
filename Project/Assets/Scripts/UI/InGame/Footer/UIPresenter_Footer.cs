@@ -8,6 +8,7 @@ public class UIPresenter_Footer : MonoBehaviour
     [SerializeField] private GameObject footerTextOb;
     [SerializeField] private GameObject playerListOb;
     [SerializeField] private GameObject submitOb;
+    [SerializeField] private GameObject retryOb;
 
     [SerializeField] private Transform executePlayerElementsParent;
     private ExecutePlayerButtons[] buttons;
@@ -27,6 +28,7 @@ public class UIPresenter_Footer : MonoBehaviour
         footerTextOb.SetActive(false);
         playerListOb.SetActive(false);
         submitOb.SetActive(false);
+        retryOb.SetActive(false);
     }
 
     public void ShowInput()
@@ -35,6 +37,7 @@ public class UIPresenter_Footer : MonoBehaviour
         footerTextOb.SetActive(false);
         playerListOb.SetActive(false);
         submitOb.SetActive(false);
+        retryOb.SetActive(false);
     }
 
     public void ShowFooterText(string text)
@@ -43,6 +46,7 @@ public class UIPresenter_Footer : MonoBehaviour
         footerTextOb.SetActive(true);
         playerListOb.SetActive(false);
         submitOb.SetActive(false);
+        retryOb.SetActive(false);
 
         footerText.text = text;
     }
@@ -53,6 +57,7 @@ public class UIPresenter_Footer : MonoBehaviour
         footerTextOb.SetActive(false);
         playerListOb.SetActive(true);
         submitOb.SetActive(false);
+        retryOb.SetActive(false);
 
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -76,8 +81,18 @@ public class UIPresenter_Footer : MonoBehaviour
         footerTextOb.SetActive(false);
         playerListOb.SetActive(false);
         submitOb.SetActive(true);
+        retryOb.SetActive(false);
 
         selectPlayerNameText.text = selectPlayerName;
+    }
+
+    public void ShowRetry()
+    {
+        InputOb.SetActive(false);
+        footerTextOb.SetActive(false);
+        playerListOb.SetActive(false);
+        submitOb.SetActive(false);
+        retryOb.SetActive(true);
     }
 
     public string GetInputFieldText()
