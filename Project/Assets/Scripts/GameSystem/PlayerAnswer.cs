@@ -8,14 +8,32 @@ using System.Linq;
 
 public class PlayerAnswer : GameStateBehaviour
 {
-    public bool IsAnserwred { get; set; }
-
     public override void Enter()
     {
         string question = PhotonNetwork.CurrentRoom.CustomProperties["Question"] is string value ? value : "";
 
+        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
+
+        //全プレイヤーの回答状況をリセット
+        foreach (var player in characterList.Characters)
+        {
+            if (player.IsNPC)
+            {
+                player.IsAnswered = false;
+            }
+            else
+            {
+                if (player == characterList.GetLocalPlayerCharacter())
+                {
+                    player.Answer = "";
+                    player.IsAnswered = false;
+                }
+            }
+        }
+
         UIPresenter_Header header = FindAnyObjectByType<UIPresenter_Header>();
-        header.SetView("回答");
+        int answerCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("AnswerCount", out object count) ? (int)count : 0;
+        header.SetView($"回答({answerCount + 1}/{AnswerWaiter.MAXANSWERCOUNT})");
 
         UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
         UIPresenter_Footer footer = FindAnyObjectByType<UIPresenter_Footer>();
@@ -27,15 +45,11 @@ public class PlayerAnswer : GameStateBehaviour
             sender.Send(question);
         }
 
-        PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         Role role = characterList.GetLocalPlayerCharacter().Job;
         if (role == Role.Werewolf)
         {
             body.ShowQuestion(question);
             footer.ShowInput();
-
-            characterList.GetLocalPlayerCharacter().Answer = "";
-            characterList.GetLocalPlayerCharacter().IsAnswered = false;
         }
         else
         {

@@ -11,7 +11,8 @@ public class Question : GameStateBehaviour
     public override void Enter()
     {
         UIPresenter_Header header = FindAnyObjectByType<UIPresenter_Header>();
-        header.SetView("質問");
+        int answerCount = PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("AnswerCount", out object count) ? (int)count : 0;
+        header.SetView($"質問({answerCount + 1}/{AnswerWaiter.MAXANSWERCOUNT})");
 
         UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
 

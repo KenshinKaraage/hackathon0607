@@ -67,5 +67,18 @@ public class ResultView : GameStateBehaviour
 
         string result = localWin ? "あなたは勝ちました！" : "あなたは負けました。";
         footer.ShowFooterText(result);
+
+        yield return new WaitForSeconds(5.0f);
+
+        //ホストのみリトライ画面を表示
+        if (PhotonNetwork.IsMasterClient)
+        {
+            footer.ShowRetry();
+        }
+        else
+        {
+            footer.ShowFooterText("ホストが再戦するか選択しています・・・");
+
+        }
     }
 }
