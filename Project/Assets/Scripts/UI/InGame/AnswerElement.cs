@@ -10,6 +10,7 @@ public class AnswerElement : MonoBehaviour
     [SerializeField] private TMP_Text answerText;
     [SerializeField] private Button selectButton;
 
+
     public void SetIcon(Sprite sprite, string name)
     {
         characterIcon.Set(sprite, name);

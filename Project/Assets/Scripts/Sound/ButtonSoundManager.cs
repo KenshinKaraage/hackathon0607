@@ -5,16 +5,13 @@ using Photon.Pun;
 public class ButtonSoundManager : MonoBehaviour
 {
     [SerializeField] private Button button;
-    public AudioManager manager;
+    private AudioManager manager;
 
     void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            manager = FindAnyObjectByType<AudioManager>();
+        manager = FindAnyObjectByType<AudioManager>();
+        button = GetComponent<Button>();
 
-            button.onClick.AddListener(() => manager.PlaySE("click"));
-
-        }
+        button.onClick.AddListener(() => manager.PlaySE("click"));
     }
 }
