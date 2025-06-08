@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: "\u8001\u4EBA"
   description: "\u71FB\u9280\u306A\u56DE\u7B54\u304C\u591A\u3044"
-  imageSprite: {fileID: 21300000, guid: c306af22cf06346f6bead3f9be112c39, type: 3}
+  imageSprite: {fileID: 21300000, guid: 6647fd2a2ceb21145ab95474f0141add, type: 3}
   characterPrompt:
     characterName: "\u8001\u4EBA"
     prompt: "\u500B\u6027\u3092\u53CD\u6620\u3055\u305B\u3066\u56DE\u7B54\u3057\u305F\u304F\u3060\u3055\u3044\u3002"
