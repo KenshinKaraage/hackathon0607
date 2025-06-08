@@ -29,6 +29,7 @@ public class GameFlowController : MonoBehaviourPunCallbacks
         // ゲームステートを Room のカスタムプロパティに設定
         Hashtable props = new Hashtable();
         props["GameState"] = GameState.JOB_DISTRIBUTION;
+        props["AnswerCount"] = 0;
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
     }
 

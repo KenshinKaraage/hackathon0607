@@ -28,16 +28,14 @@ public class Vote : GameStateBehaviour
         PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         List<IPlayerCharacter> votableTargets = characterList.Characters.Where(x => x.IsAlive && x.Job != Role.Representative).ToList();
 
-        //回答一覧表示
         UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
         CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
         Debug.Log("characterDataList.CharacterDatas.Count:" + characterDataList.CharacterDatas.Count());
         System.Action<IPlayerCharacter> action = VoteProcess.Instance.OnButtonSelected;
 
-        
         localPlayerCharacter = characterList.GetLocalPlayerCharacter();  //将来的にCharacterList.GetLocalPlayerCharacter()で取得する
 
-        //投票者、非投票者でfooterの表示を変える
+        //投票者、非投票者でボタンの表示、footerの表示を変える
         UIPresenter_Footer footer = FindAnyObjectByType<UIPresenter_Footer>();
 
         bool isVoter = localPlayerCharacter.Job == Role.Representative && localPlayerCharacter.IsAlive;
@@ -48,7 +46,6 @@ public class Vote : GameStateBehaviour
         }
         else
         {
-            body.ShowAnswers(votableTargets.Select(x => x.Answer).ToArray());
             footer.ShowFooterText("代表者が投票先を選んでいます");
         }
     }
