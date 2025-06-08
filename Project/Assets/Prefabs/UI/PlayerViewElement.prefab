@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u3042\u3042\u3042"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
-  m_sharedMaterial: {fileID: 1669631682781920170, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
+  m_sharedMaterial: {fileID: 8900166988699861583, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

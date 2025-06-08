@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30DB\u30B9\u30C8"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
-  m_sharedMaterial: {fileID: 1669631682781920170, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
+  m_sharedMaterial: {fileID: 8900166988699861583, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -220,6 +220,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1049952398102772913, guid: a23b664f438c749f38094977f5242627, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3590019739607860034, guid: a23b664f438c749f38094977f5242627, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
