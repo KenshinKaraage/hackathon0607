@@ -289,8 +289,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8003\u3048\u3066\u3044\u307E\u3059\u30FB\u30FB\u30FB"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
-  m_sharedMaterial: {fileID: 1669631682781920170, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
+  m_sharedMaterial: {fileID: 8900166988699861583, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -563,8 +563,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u6295\u7968"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
-  m_sharedMaterial: {fileID: 1669631682781920170, guid: b46db981e057d47558f9d56bf5926be3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
+  m_sharedMaterial: {fileID: 8900166988699861583, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -640,6 +640,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8145167906354094816}
     m_Modifications:
+    - target: {fileID: 202920116182327636, guid: e96661e867b634cb19007cbb9f2b2327, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
+    - target: {fileID: 202920116182327636, guid: e96661e867b634cb19007cbb9f2b2327, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8900166988699861583, guid: 5ad44182838534874ba071b44f25dc5c, type: 2}
+    - target: {fileID: 202920116182327636, guid: e96661e867b634cb19007cbb9f2b2327, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7711939433705725813, guid: e96661e867b634cb19007cbb9f2b2327, type: 3}
       propertyPath: m_Pivot.x
       value: 0

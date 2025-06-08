@@ -19,6 +19,7 @@ public class UIPresenter_Body : MonoBehaviour
     [SerializeField] private TMP_Text waitText;
 
     [SerializeField] private TMP_Text questionText;
+    [SerializeField] private CharacterIcon questionCharacterIcon;
     [SerializeField] private CharacterIcon executeCharacterIcon;
 
     [SerializeField] private TMP_Text executeText;
@@ -67,8 +68,20 @@ public class UIPresenter_Body : MonoBehaviour
         waitText.text = text;
     }
 
+    public void ShowQuestion(Sprite sprite, string name, string question)
+    {
+        jobDistributionOb.SetActive(false);
+        waitOb.SetActive(false);
+        questionOb.SetActive(true);
+
+        questionCharacterIcon.Set(sprite, name);
+        questionText.text = question;
+    }
+
     public void ShowQuestion(string question)
     {
+        jobDistributionOb.SetActive(false);
+        waitOb.SetActive(false);
         questionOb.SetActive(true);
         questionText.text = question;
     }
