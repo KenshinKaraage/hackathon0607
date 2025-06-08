@@ -539,6 +539,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1880800983472028059, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3194484844728566145, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
       propertyPath: m_Name
       value: CreateButton
@@ -624,15 +628,31 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 988080723}
+    - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickCreateRoom
       objectReference: {fileID: 0}
     - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: NameInputManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016814465382153362, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: NameInputManager, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2569,6 +2589,10 @@ PrefabInstance:
     - target: {fileID: 1424575195892799760, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880800983472028059, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
+      propertyPath: m_Sprite
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3194484844728566145, guid: b0b2ca86034034556a4759a4697acf88, type: 3}
       propertyPath: m_Name
