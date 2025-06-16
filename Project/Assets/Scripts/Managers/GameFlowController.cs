@@ -4,31 +4,39 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using System;
 using System.Collections.Generic;
+using UnityEngine.InputSystem.XR;
 
 public class GameFlowController : MonoBehaviourPunCallbacks
 {
-    private JobDistribution distribution;
-    private Question question;
-    private PlayerAnswer playerAnswer;
-    private Vote vote;
-    private ResultView result;
+    private RoleDistributionPhase distribution;
+    private QuestionPhase question;
+    private AnswerPhase playerAnswer;
+    private VotePhase vote;
+    private ResultPhase result;
 
     private Dictionary<GameState, GameStateBehaviour> gameStateDict;
 
     private void Awake()
     {
-        distribution = GetComponent<JobDistribution>();
-        question = GetComponent<Question>();
-        playerAnswer = GetComponent<PlayerAnswer>();
-        vote = GetComponent<Vote>();
-        result = GetComponent<ResultView>();
+        distribution = GetComponent<RoleDistributionPhase>();
+        question = GetComponent<QuestionPhase>();
+        playerAnswer = GetComponent<AnswerPhase>();
+        vote = GetComponent<VotePhase>();
+        result = GetComponent<ResultPhase>();
     }
 
+    private void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Initialize();
+        }
+    }
     public void Initialize()
     {
         // ゲームステートを Room のカスタムプロパティに設定
         Hashtable props = new Hashtable();
-        props["GameState"] = GameState.JOB_DISTRIBUTION;
+        props["GameState"] = GameState.ROLE_DISTRIBUTION;
         props["AnswerCount"] = 0;
         PhotonNetwork.CurrentRoom.SetCustomProperties(props);
     }
@@ -60,7 +68,7 @@ public class GameFlowController : MonoBehaviourPunCallbacks
     {
         gameStateDict = new Dictionary<GameState, GameStateBehaviour>()
         {
-            {GameState.JOB_DISTRIBUTION, distribution },
+            {GameState.ROLE_DISTRIBUTION, distribution },
             {GameState.QUESTION, question },
             {GameState.ANSWER, playerAnswer },
             {GameState.VOTE, vote },

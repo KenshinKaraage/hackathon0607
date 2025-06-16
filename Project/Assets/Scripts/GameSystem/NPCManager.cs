@@ -28,16 +28,16 @@ public class NPCManager : MonoBehaviourPunCallbacks
         {
             NpcList.Clear();
             // 例: 人間NPCを3体生成
-            CreateAndAddNPC("NPCx", JobNames.VILLAGER);
-            CreateAndAddNPC("NPCy", JobNames.VILLAGER);
-            CreateAndAddNPC("NPCz", JobNames.VILLAGER);
+            CreateAndAddNPC("NPCx", Role.VillagerAI);
+            CreateAndAddNPC("NPCy", Role.VillagerAI);
+            CreateAndAddNPC("NPCz", Role.VillagerAI);
 
             // 他クライアントへNPCリストを同期
             photonView.RPC("SyncNPCListRPC", RpcTarget.OthersBuffered, SerializeNPCList(NpcList));
         }
     }
 
-    private void CreateAndAddNPC(string name, JobNames job)
+    private void CreateAndAddNPC(string name, Role job)
     {
         NonPlayerCharacter newNpc = new NonPlayerCharacter(nextNpcId++, name);
         NpcList.Add(newNpc);

@@ -9,7 +9,7 @@ public class QuestionWaiter : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         Debug.Log("changed");
-        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.JOB_DISTRIBUTION;
+        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.ROLE_DISTRIBUTION;
         Debug.Log(currentState);
         if (currentState != GameState.QUESTION) return;
         Debug.Log("inQuestion");

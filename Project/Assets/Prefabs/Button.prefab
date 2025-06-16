@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 8004492177103882515}
   - component: {fileID: 1880800983472028059}
   - component: {fileID: 6016814465382153362}
-  - component: {fileID: 7913014548434682382}
-  - component: {fileID: 6775155827324300138}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -123,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7913014548434682382}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: GoToGame
         m_Mode: 1
@@ -135,32 +133,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7913014548434682382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194484844728566145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e502d093843fddf419b1d57a92071ed2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6775155827324300138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194484844728566145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3bde1c056c4c0c4a913720fb936fe28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  passwordInput: {fileID: 0}
-  hostPasswordInput: {fileID: 0}
 --- !u!1 &5317419972663725199
 GameObject:
   m_ObjectHideFlags: 0

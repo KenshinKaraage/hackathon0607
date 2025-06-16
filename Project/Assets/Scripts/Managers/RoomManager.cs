@@ -113,6 +113,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     // 入室成功時（共通）
     public override void OnJoinedRoom()
     {
+        SceneController sceneController = FindAnyObjectByType<SceneController>();
+
         Debug.Log("Joined room: " + PhotonNetwork.CurrentRoom.Name);
         // RoomName = PhotonNetwork.CurrentRoom.Name; // 必要であれば部屋名を設定
 
@@ -131,7 +133,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     if (actualRoomPassword == tempEnteredPassword)
                     {
                         Debug.Log("パスワードが一致しました。RoomSceneに遷移します。");
-                        PhotonNetwork.LoadLevel("RoomScene2"); // PhotonNetwork.LoadLevel を推奨
+                        sceneController.GoToRoom();
                     }
                     else
                     {
@@ -144,14 +146,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 else // パスワードが設定されていない部屋の場合（基本的にはありえないが念のため）
                 {
                     Debug.Log("この部屋にはパスワードが設定されていませんが、パスワードなしで参加処理を継続します。RoomSceneに遷移します。");
-                    PhotonNetwork.LoadLevel("RoomScene2");
+                    sceneController.GoToRoom();
                 }
             }
             else // ルームに "password" プロパティが存在しない場合 (パスワードなしルーム)
             {
                 Debug.Log("この部屋はパスワードプロパティが設定されていません（パスワードなし）。RoomSceneに遷移します。");
                 // パスワードなしの部屋への参加を許可する場合
-                PhotonNetwork.LoadLevel("RoomScene2");
+                sceneController.GoToRoom();
             }
         }
         else // マスタークライアント（ホスト）の場合
