@@ -872,13 +872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4995fa0e418112c4d928dcc4e234458e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1015125631}
-  manager: {fileID: 0}
---- !u!82 &1106130757 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 7538255009966253395, guid: 637259ec47001554cbfb9eb163e08311, type: 3}
-  m_PrefabInstance: {fileID: 6047063588425038145}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1354943396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1309,10 +1302,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGMManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7586182469519978659, guid: 637259ec47001554cbfb9eb163e08311, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 1106130757}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
