@@ -13,6 +13,7 @@ public class RetryWindow : MonoBehaviour
     public void OnClickBack()
     {
         //部屋に戻る
-        PhotonNetwork.LoadLevel("RoomScene2");
+        SceneController sceneController = FindAnyObjectByType<SceneController>();
+        sceneController.GoToRoom();
     }
 }

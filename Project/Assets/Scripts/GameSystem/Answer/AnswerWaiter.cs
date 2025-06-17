@@ -15,7 +15,7 @@ public class AnswerWaiter : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.JOB_DISTRIBUTION;
+        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.ROLE_DISTRIBUTION;
         if (currentState != GameState.ANSWER) return;
         if (!changedProps.TryGetValue("IsAnswered", out object answered)) return;
         if ((bool)answered)
@@ -34,7 +34,7 @@ public class AnswerWaiter : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.JOB_DISTRIBUTION;
+        GameState currentState = (PhotonNetwork.CurrentRoom.CustomProperties["GameState"] is int value) ? (GameState)value : GameState.ROLE_DISTRIBUTION;
         if (currentState != GameState.ANSWER) return;
         if (propertiesThatChanged.TryGetValue("AllAIAnswered", out object answered))
         {
@@ -81,15 +81,15 @@ public class AnswerWaiter : MonoBehaviourPunCallbacks
         PlayerCharacterList characterList = FindAnyObjectByType<PlayerCharacterList>();
         List<IPlayerCharacter> votableTargets = characterList.Characters.Where(x => x.IsAlive && x.Job != Role.Representative).ToList();
 
+        AnswerPhaseView answerPhaseView = FindAnyObjectByType<AnswerPhaseView>();
+
         UIPresenter_Body body = FindAnyObjectByType<UIPresenter_Body>();
         CharacterDataList characterDataList = FindAnyObjectByType<CharacterDataList>();
         Debug.Log("characterDataList.CharacterDatas.Count:" + characterDataList.CharacterDatas.Count());
 
         IPlayerCharacter localPlayerCharacter = characterList.GetLocalPlayerCharacter();  //将来的にCharacterList.GetLocalPlayerCharacter()で取得する
-        body.ShowAnswers(votableTargets.Select(x => x.Answer).ToArray());
 
-        UIPresenter_Footer footer = FindAnyObjectByType<UIPresenter_Footer>();
-        footer.ShowFooterText("回答を表示します");
+        answerPhaseView.ShowAnswers(votableTargets);
 
         yield return new WaitForSeconds(5.0f);
 

@@ -2,9 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
+
+[RequireComponent(typeof(Button))]
 public class ButtonSoundManager : MonoBehaviour
 {
-    [SerializeField] private Button button;
+    private Button button;
     private AudioManager manager;
 
     void Start()
