@@ -48,3 +48,4 @@ public class QuestionPhase : GameStateBehaviour
         PhotonNetwork.CurrentRoom.SetCustomProperties(resultProps);
     }
 }
+

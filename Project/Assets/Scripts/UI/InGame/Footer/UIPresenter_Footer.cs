@@ -10,17 +10,11 @@ public class UIPresenter_Footer : MonoBehaviour
     [SerializeField] private GameObject submitOb;
     [SerializeField] private GameObject retryOb;
 
-    [SerializeField] private Transform executePlayerElementsParent;
     private ExecutePlayerButtons[] buttons;
 
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TMP_Text footerText;
     [SerializeField] private TMP_Text selectPlayerNameText;
-
-    private void Awake()
-    {
-        buttons = executePlayerElementsParent.GetComponentsInChildren<ExecutePlayerButtons>();
-    }
 
     public void Hide()
     {
